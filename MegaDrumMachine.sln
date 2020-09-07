@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MegaDrumMachine", "MegaDrumMachine\MegaDrumMachine.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "..\..\..\Documents\Arduino\My Examples\HelloWorld\HelloWorld.vcxproj", "{2221ABE2-9897-480B-AEAA-3701ABFF719B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialTest", "SerialTest\SerialTest.csproj", "{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InterruptRotator", "..\..\..\Documents\Arduino\My Examples\InterruptRotator\InterruptRotator.vcxproj", "{1F00740E-E3E4-40C6-871C-B24C65C3F03D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePollRotator", "..\..\..\Documents\Arduino\My Examples\SimplePollRotator\SimplePollRotator.vcxproj", "{D523755F-0449-4A3B-9860-22998D295A09}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimplePollRotatorLCD", "..\..\..\Documents\Arduino\My Examples\SimplePollRotatorLCD\SimplePollRotatorLCD.vcxproj", "{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxitems", "{E4086C01-76E6-43BA-A9AF-E31D41A4F510}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Any CPU.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Debug|x86.ActiveCfg = Debug|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Debug|x86.Build.0 = Debug|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Release|Any CPU.ActiveCfg = Release|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Release|x86.ActiveCfg = Release|Win32
+		{2221ABE2-9897-480B-AEAA-3701ABFF719B}.Release|x86.Build.0 = Release|Win32
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}.Release|x86.Build.0 = Release|Any CPU
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Debug|x86.ActiveCfg = Debug|Win32
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Debug|x86.Build.0 = Debug|Win32
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Release|Any CPU.ActiveCfg = Release|Win32
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Release|x86.ActiveCfg = Release|Win32
+		{1F00740E-E3E4-40C6-871C-B24C65C3F03D}.Release|x86.Build.0 = Release|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Debug|x86.ActiveCfg = Debug|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Debug|x86.Build.0 = Debug|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Release|Any CPU.ActiveCfg = Release|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Release|x86.ActiveCfg = Release|Win32
+		{D523755F-0449-4A3B-9860-22998D295A09}.Release|x86.Build.0 = Release|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Debug|x86.ActiveCfg = Debug|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Debug|x86.Build.0 = Debug|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Release|Any CPU.ActiveCfg = Release|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Release|x86.ActiveCfg = Release|Win32
+		{ECB7E658-EF6E-4AD9-BFB3-02FE88986043}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F39937B-8787-4E84-BFFE-F08D221B665B}
+	EndGlobalSection
+EndGlobal

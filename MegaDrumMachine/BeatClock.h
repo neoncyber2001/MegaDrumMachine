@@ -1,0 +1,73 @@
+// BeatClock.h
+
+#ifndef _BEATCLOCK_h
+#define _BEATCLOCK_h
+
+#if defined(ARDUINO) && ARDUINO >= 100
+	#include "arduino.h"
+#else
+	#include "WProgram.h"
+#endif
+
+#ifdef BEATCLOCK_MICROS
+	#define __BEATTIME (1000000/(m_tempo/60))
+#define __TIMER	micros()
+#else
+	#define __BEATTIME (1000/(m_tempo/60))
+	#define __TIMER millis()
+#endif // BEATCLOCK_MICROS
+
+typedef void (*onPulseFn)(uint32_t);			//void onPulse(uint32_t pulses){...}
+typedef void (*onStepFn)(uint32_t, uint32_t);	//void onStep(uint32_t pulses, uint32_t steps){...}
+typedef void (*onBeatFn)(uint32_t, uint32_t);	//void onStep(uint32_t pulses, uint32_t beats){...}
+
+#ifndef CLOCK_TRIGGER_PIN
+#define CLOCK_TRIGGER_PIN	LED_BUILTIN
+#endif // !CLOCK_TRIGGER_PIN
+
+class BeatClock
+{
+ protected:
+	 bool m_spstate = 0;
+	 byte m_SyncPin=0;
+	 byte m_SyncMod = 1;
+	 bool m_isClockMaster;
+	 bool m_isTrigger;
+	 bool m_isUartMidi;
+	 bool m_isPulseSet;
+	 bool m_isStepSet;
+	 bool m_isBeatSet;
+	 unsigned int m_pulses;
+	 onPulseFn m_onPulse;
+	 onStepFn m_onStep;
+	 onBeatFn m_onBeat;
+	 int m_tempo; //in bpm
+	 int m_ppqn; //Pulses Per Quarter Note
+	 bool m_isRunning;
+	 unsigned long m_nextPulse;
+	 unsigned long m_pulseTime;
+	 unsigned long m_CalculatePulseTime();
+ public:
+	void init();
+	void init(bool master, bool midi, bool trigger);
+	void setOnPulse(onPulseFn userFn);
+	void setOnStep(onStepFn userFn);
+	void setOnBeat(onBeatFn userFn);
+	void tick();
+	unsigned int getCurrentPulses();
+	unsigned int getCurrentSteps();
+	unsigned int getCurrentBeats();
+	void setTempo(int bpm);
+	int getTempo();
+	//void setPPQN(int pulses);
+	//int getPPQN();
+	void start();
+	void stop();
+	void reset();
+	bool isRunning();
+
+};
+
+
+#endif
+

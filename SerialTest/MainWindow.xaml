@@ -1,0 +1,146 @@
+﻿<Window x:Class="SerialTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance {x:Type local:MainVM}, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
+            </Grid.Resources>
+            <TextBlock Grid.Row="0" Text="Port:"/>
+            <ComboBox Grid.Column="1" Margin="3" ItemsSource="{Binding SerialPortNames}" SelectedItem="{Binding SelectedPortName}"/>
+            <Button Grid.Column="2" Margin="3" Padding="3" Command="local:CustomCommands.RefreshSerialNames">Refresh</Button>
+            <TextBlock Grid.Row="1" Text="Speed:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Text="{Binding SerialBaud}" Margin="3" Padding="3"/>
+            <TextBlock Grid.Row="2" Text="Connection:"/>
+            <Button Grid.Row="2" Grid.Column="1" Margin="3" Padding="3" Command="local:CustomCommands.ConnectDisconnect">Connect</Button>
+            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="3"/>
+            <TextBlock Grid.Row="4" Text="Send"/>
+            <ListBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" ItemsSource="{Binding SendCommands}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="RoutedUICommand">
+                        <Button Command="{Binding}">
+                            <TextBlock Text="{Binding Text}"/>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Grid.Row="5" Text="Recieve"/>
+            <ListBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="3">
+                <TextBlock>item</TextBlock>
+                <TextBlock>item</TextBlock>
+                <TextBlock>item</TextBlock>
+                <TextBlock>item</TextBlock>
+            </ListBox>
+            <Button Grid.Column="1" Grid.Row="6" Margin="3" Padding="3">Dump Data</Button>
+            <Button Grid.Column="1" Grid.Row="7" Margin="3" Padding="3">Load Dump</Button>
+        </Grid>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="5" Background="LightGray" Margin="3"/>
+        <DockPanel Grid.Column="2">
+            <Expander DockPanel.Dock="Bottom" Header="Raw Data" ExpandDirection="Up">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Gray" BorderThickness="0.75" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="{Binding RawDataLog}" Height="128" MaxHeight="128" Margin="3" Padding="3" IsTabStop="False" AcceptsReturn="True" IsReadOnly="True" VerticalContentAlignment="Bottom" TextWrapping="WrapWithOverflow" VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" TextChanged="TextBox_TextChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="0" Margin="3" Padding="3" Grid.ColumnSpan="3"/>
+                    
+                    <Button Grid.Column="3" Grid.Row="1" Padding="3" Margin="3">Send</Button>
+                </Grid>
+            </Expander>
+            <TabControl>
+                <TabItem Header="Samples">
+                    <local:SampleLibrary DataContext="{Binding AudioSamples}" d:DataContext="{d:DesignInstance Type=local:DesignDataLibrary, IsDesignTimeCreatable=True}" Margin="0,3,0,-3"/>
+                </TabItem>
+                <TabItem Header="Kits">
+
+                </TabItem>
+                <TabItem Header="Pattern Banks">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid Margin="1" Grid.Row="1" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#"/>
+                                <DataGridTextColumn Header="Name"/>
+                                <DataGridTextColumn Header="Date"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Patterns">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3" Padding="3" FontSize="16" FontWeight="Bold">Pattern Editor</TextBlock>
+                            <TextBlock Text="Bank:" Padding="3" Margin="3"/>
+                            <ComboBox Width="96" Margin="3" Padding="3"/>
+                            <TextBlock Text=" Pattern:" Padding="3" Margin="3"/>
+                            <ComboBox Width="96" Margin="3" Padding="3"/>
+                        </StackPanel>
+                        <DataGrid Grid.Row="1" Margin="3" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Step"/>
+                                <DataGridCheckBoxColumn Header="Kick"/>
+                                <DataGridCheckBoxColumn Header="Snare"/>
+                                <DataGridCheckBoxColumn Header="OHH"/>
+                                <DataGridCheckBoxColumn Header="CHH"/>
+                                <DataGridCheckBoxColumn Header="Tom"/>
+                                <DataGridCheckBoxColumn Header="Clap"/>
+                                <DataGridCheckBoxColumn Header="Misc A"/>
+                                <DataGridCheckBoxColumn Header="Misc B"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Text=" Next:" Padding="3" Margin="3"/>
+                            <ComboBox Width="96" Margin="3" Padding="3"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

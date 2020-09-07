@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SerialTest.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataDir" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\MegaDrumMachine\</Value>
+    </Setting>
+    <Setting Name="SampleLib" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Samples.dat</Value>
+    </Setting>
+    <Setting Name="OnCardSampleData" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">OnCard.dat</Value>
+    </Setting>
+    <Setting Name="KitDir" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Kits\</Value>
+    </Setting>
+    <Setting Name="PatternBanks" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Patterns\</Value>
+    </Setting>
+    <Setting Name="SDImportDir" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SDImport\</Value>
+    </Setting>
+    <Setting Name="TranscodeCachePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\temp\</Value>
+    </Setting>
+    <Setting Name="SDFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.sdaudit.csv</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
