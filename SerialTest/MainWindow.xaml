@@ -108,37 +108,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Patterns">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="3" Padding="3" FontSize="16" FontWeight="Bold">Pattern Editor</TextBlock>
-                            <TextBlock Text="Bank:" Padding="3" Margin="3"/>
-                            <ComboBox Width="96" Margin="3" Padding="3"/>
-                            <TextBlock Text=" Pattern:" Padding="3" Margin="3"/>
-                            <ComboBox Width="96" Margin="3" Padding="3"/>
-                        </StackPanel>
-                        <DataGrid Grid.Row="1" Margin="3" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Step"/>
-                                <DataGridCheckBoxColumn Header="Kick"/>
-                                <DataGridCheckBoxColumn Header="Snare"/>
-                                <DataGridCheckBoxColumn Header="OHH"/>
-                                <DataGridCheckBoxColumn Header="CHH"/>
-                                <DataGridCheckBoxColumn Header="Tom"/>
-                                <DataGridCheckBoxColumn Header="Clap"/>
-                                <DataGridCheckBoxColumn Header="Misc A"/>
-                                <DataGridCheckBoxColumn Header="Misc B"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock Text=" Next:" Padding="3" Margin="3"/>
-                            <ComboBox Width="96" Margin="3" Padding="3"/>
-                        </StackPanel>
-                    </Grid>
+                    
                 </TabItem>
             </TabControl>
         </DockPanel>

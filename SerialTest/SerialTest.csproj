@@ -203,7 +203,13 @@
     <Compile Include="FileScanner.cs" />
     <Compile Include="LibraryVM.cs" />
     <Compile Include="Models\AudioSample.cs" />
+    <Compile Include="Models\Pattern.cs" />
+    <Compile Include="Models\PatternBank.cs" />
     <Compile Include="Models\SampleTypes.cs" />
+    <Compile Include="Models\PatternStep.cs" />
+    <Compile Include="PatternView.xaml.cs">
+      <DependentUpon>PatternView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RawDatalogger.cs" />
     <Compile Include="SampleLibrary.xaml.cs">
       <DependentUpon>SampleLibrary.xaml</DependentUpon>
@@ -226,6 +232,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PatternView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SampleLibrary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
