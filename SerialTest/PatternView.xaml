@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SerialTest"
+             xmlns:mdl="clr-namespace:SerialTest.Models"
+             
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance {x:Type local:PatternVM}, IsDesignTimeCreatable=True}" >
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -24,25 +26,37 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="3" Padding="3" FontSize="16" FontWeight="Bold">Pattern Editor</TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Bank:" Padding="3" Margin="3"/>
-            <ComboBox Grid.Row="1" Grid.Column="2" Width="96" Margin="3" Padding="3"/>
+            <TextBlock Text="{Binding BankID}" />
             <TextBlock Grid.Row="1" Grid.Column="3" Text="Pattern:" Padding="3" Margin="3"/>
-            <ComboBox Grid.Row="1" Grid.Column="4" Width="96" Margin="3" Padding="3"/>
-            <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="3" AutoGenerateColumns="False">
+            <ComboBox x:Name="cmboPattern" Grid.Row="1" Grid.Column="4" Width="96" Margin="3" Padding="3" ItemsSource="{Binding AvailablePatterns}" SelectedItem="{Binding CurrentPattern, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="mdl:Pattern">
+                        <TextBlock Text="{Binding PatternNumber}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="3" AutoGenerateColumns="False" ItemsSource="{Binding CurrentPattern.patternSteps}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Step"/>
-                    <DataGridCheckBoxColumn Header="Kick"/>
-                    <DataGridCheckBoxColumn Header="Snare"/>
-                    <DataGridCheckBoxColumn Header="OHH"/>
-                    <DataGridCheckBoxColumn Header="CHH"/>
-                    <DataGridCheckBoxColumn Header="Tom"/>
-                    <DataGridCheckBoxColumn Header="Clap"/>
-                    <DataGridCheckBoxColumn Header="Misc A"/>
-                    <DataGridCheckBoxColumn Header="Misc B"/>
+                    <DataGridCheckBoxColumn Header="1" Binding="{Binding Track1}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="2" Binding="{Binding Track2}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="3" Binding="{Binding Track3}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="4" Binding="{Binding Track4}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="5" Binding="{Binding Track5}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="6" Binding="{Binding Track6}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="7" Binding="{Binding Track7}" MinWidth="32"/>
+                    <DataGridCheckBoxColumn Header="8" Binding="{Binding Track8}" MinWidth="32"/>
                 </DataGrid.Columns>
+                <DataGrid.RowStyle>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger />
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
             <StackPanel Grid.Row="3" Grid.ColumnSpan="6" Orientation="Horizontal">
                 <TextBlock Text=" Next:" Padding="3" Margin="3"/>
-                <ComboBox Width="96" Margin="3" Padding="3"/>
+                <TextBox Text="{Binding NextPattern}" Width="72" Padding="3" Margin="3" VerticalContentAlignment="Center" />
             </StackPanel>
         </Grid>
     </Grid>

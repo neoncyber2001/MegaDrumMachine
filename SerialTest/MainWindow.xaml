@@ -83,32 +83,18 @@
                     <Button Grid.Column="3" Grid.Row="1" Padding="3" Margin="3">Send</Button>
                 </Grid>
             </Expander>
-            <TabControl>
-                <TabItem Header="Samples">
+            <TabControl DataContext="{Binding}">
+                <TabItem Header="Samples" DataContext="{Binding}">
                     <local:SampleLibrary DataContext="{Binding AudioSamples}" d:DataContext="{d:DesignInstance Type=local:DesignDataLibrary, IsDesignTimeCreatable=True}" Margin="0,3,0,-3"/>
                 </TabItem>
-                <TabItem Header="Kits">
+                <TabItem Header="Kits" DataContext="{Binding}">
 
                 </TabItem>
-                <TabItem Header="Pattern Banks">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <DataGrid Margin="1" Grid.Row="1" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="#"/>
-                                <DataGridTextColumn Header="Name"/>
-                                <DataGridTextColumn Header="Date"/>
-
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                <TabItem Header="Pattern Banks" DataContext="{Binding}">
+                    <local:PatternBankView x:Name="bnkView" DataContext="{Binding BankVM}" />
                 </TabItem>
-                <TabItem Header="Patterns">
-                    
+                <TabItem Header="Patterns" DataContext="{Binding}">
+                    <local:PatternView x:Name="patview" SetPattern="{Binding CurrentBank}"/>
                 </TabItem>
             </TabControl>
         </DockPanel>

@@ -9,11 +9,14 @@ namespace SerialTest.Models
     [Serializable]
     public class PatternBank
     {
+        [NonSerialized]
+        private bool isSelected1;
+
         public PatternBank()
         {
-            for(int i = 0; i < 16; i++)
+            for (int i = 0; i < 16; i++)
             {
-                patterns.Add(new Pattern() {nextPattern=i} );
+                patterns.Add(new Pattern() { PatternNumber=i, nextPattern = i });
             }
             id = Guid.NewGuid();
         }
@@ -24,12 +27,15 @@ namespace SerialTest.Models
             {
                 patterns = pats;
             }
-            else { 
+            else
+            {
                 throw new ArgumentException("pats is either null or incomplete");
             }
             id = ident;
         }
         public Guid id { get; set; }
         public List<Pattern> patterns { get; set; } = new List<Pattern>(16);
+        public String name { get; set; } = string.Empty;
+        public bool isSelected { get => isSelected1; set => isSelected1 = value; }
     }
 }

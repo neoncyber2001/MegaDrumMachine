@@ -12,7 +12,7 @@ namespace SerialTest.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -95,6 +95,51 @@ namespace SerialTest.Properties {
         public string SDFile {
             get {
                 return ((string)(this["SDFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("76rGd0wA58LHXdVb")]
+        public string VersionString {
+            get {
+                return ((string)(this["VersionString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.PATT.BANK.")]
+        public string BankFileHeader {
+            get {
+                return ((string)(this["BankFileHeader"]));
+            }
+            set {
+                this["BankFileHeader"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.SAMPL.KIT.")]
+        public string KitFileHeader {
+            get {
+                return ((string)(this["KitFileHeader"]));
+            }
+            set {
+                this["KitFileHeader"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.DRUM.DATA.")]
+        public string MetaFileHeader {
+            get {
+                return ((string)(this["MetaFileHeader"]));
+            }
+            set {
+                this["MetaFileHeader"] = value;
             }
         }
     }

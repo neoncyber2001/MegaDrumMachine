@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="SerialTest.PatternBankView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SerialTest"
+             xmlns:mdl="clr-namespace:SerialTest.Models"
+             xmlns:command="clr-namespace:SerialTest.Commands"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=local:PatternBankVM, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock FontSize="18" Text="Pattern Banks" />
+        </StackPanel>
+        <DataGrid x:Name="bankGrid" Margin="1" Grid.Row="1" ItemsSource="{Binding PatternBanks}" AutoGenerateColumns="false" SelectedItem="{Binding SelectedPatternBank}" IsSynchronizedWithCurrentItem="True" RowBackground="#FFF0F0F0" AlternationCount="4" AlternatingRowBackground="Azure" AreRowDetailsFrozen="True">
+            <DataGrid.Columns >
+                <DataGridCheckBoxColumn Header="Load" Binding="{Binding isSelected}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding name}" IsReadOnly="False"/>
+                <DataGridTextColumn Header="GUID" Binding="{Binding id}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Reimport">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="mdl:PatternBank">
+                            <Button>Reimport</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Duplicate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="mdl:PatternBank">
+                            <Button>Duplicate</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Edit">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="mdl:PatternBank">
+                            <Button Command="command:BankCommands.EditPatternBank" CommandParameter="{Binding}">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Margin="3" Padding="3">New</Button>
+            <Button Margin="3" Padding="3">Export</Button>
+            <Button Margin="3" Padding="3">Import</Button>
+            <Button Margin="3" Padding="3" Command="command:BankCommands.EditPatternBank" CommandParameter="{Binding SelectedValue, ElementName=bankGrid}">Edit Bank</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

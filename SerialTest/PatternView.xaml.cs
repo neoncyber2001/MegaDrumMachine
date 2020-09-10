@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using SerialTest.Models;
 namespace SerialTest
 {
     /// <summary>
@@ -20,9 +20,27 @@ namespace SerialTest
     /// </summary>
     public partial class PatternView : UserControl
     {
+
+        public PatternVM VM = new PatternVM();
         public PatternView()
         {
             InitializeComponent();
+            DataContext = VM;
         }
-    }
+
+       
+
+        public PatternBank SetPattern
+        {
+            get { return (PatternBank)GetValue(SetPatternProperty); }
+            set { 
+                SetValue(SetPatternProperty, value);
+                VM.bank = value;
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for SetPattern.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SetPatternProperty =
+            DependencyProperty.Register("SetPattern", typeof(PatternBank), typeof(PatternView), new PropertyMetadata(null));
+        }
 }

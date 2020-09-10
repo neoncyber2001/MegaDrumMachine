@@ -11,12 +11,38 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.IO;
-
+using SerialTest.Models;
 namespace SerialTest
 {
 
     public class MainVM : INotifyPropertyChanged
     {
+        private MainWindow owner1;
+        public MainWindow owner
+        {
+            get => owner1;
+            set
+            {
+                if (owner1 != null)
+                {
+                    owner1.bnkView.VM.EditPattern -= BankVM_EditPattern;
+                }
+                owner1 = value;
+                owner1.bnkView.VM.EditPattern += BankVM_EditPattern;
+            }
+        }
+        private PatternBank _CurrentBank;
+
+        public PatternBank CurrentBank
+        {
+            get => _CurrentBank;
+            set
+            {
+                _CurrentBank = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         protected void NotifyPropertyChanged([CallerMemberName] String PropertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
@@ -37,6 +63,19 @@ namespace SerialTest
                 NotifyPropertyChanged();
             }
         }
+
+        private PatternBankVM _PatternBankVM;
+
+        public PatternBankVM BankVM
+        {
+            get => _PatternBankVM;
+            set
+            {
+                _PatternBankVM = value;
+                NotifyPropertyChanged();
+            }
+        }
+
 
 
         protected ObservableCollection<String> _SerialPortNames = new ObservableCollection<String>();
@@ -68,7 +107,7 @@ namespace SerialTest
         }
 
 
-        private int _SerialBaud=9600;
+        private int _SerialBaud = 9600;
 
         public int SerialBaud
         {
@@ -82,8 +121,9 @@ namespace SerialTest
 
         virtual public bool isConnected
         {
-            get {
-                if (SerialConnection!=null && SerialConnection.IsOpen)
+            get
+            {
+                if (SerialConnection != null && SerialConnection.IsOpen)
                 {
                     return true;
                 }
@@ -99,7 +139,7 @@ namespace SerialTest
             if (!isConnected)
             {
                 Debug.WriteLine("Connecting");
-                RawDataLog += "Connect at " + DateTime.Now.ToString() + " Port:" + SelectedPortName + " Baud:"+ SerialBaud +"\n";
+                RawDataLog += "Connect at " + DateTime.Now.ToString() + " Port:" + SelectedPortName + " Baud:" + SerialBaud + "\n";
                 if (SerialConnection == null)
                 {
                     SerialConnection = new SerialPort(_SelectedPortName, _SerialBaud);
@@ -128,7 +168,7 @@ namespace SerialTest
             }
         }
 
-        private String _RawDataLog="";
+        private String _RawDataLog = "";
 
         public String RawDataLog
         {
@@ -154,7 +194,7 @@ namespace SerialTest
                 while (prt.BytesToRead > 0)
                 {
                     int inputByte = prt.ReadByte();
-                    this.RawDataLog += "0x"+ Convert.ToString(inputByte, 16) + " ";
+                    this.RawDataLog += "0x" + Convert.ToString(inputByte, 16) + " ";
                     if (inputByte == 0x1B)
                     {
                         Debug.WriteLine("Escape Recieved");
@@ -162,7 +202,7 @@ namespace SerialTest
                         InputCommand = string.Empty;
                         RawDataLog += "\n";
                     }
-                    else if (inputByte == '@') 
+                    else if (inputByte == '@')
                     {
                         RawDataLog += "Synchronus Idle\n";
                     }
@@ -172,9 +212,11 @@ namespace SerialTest
                     }
                 }
             }
-            else if(InputMode == 1) { // Save Data
+            else if (InputMode == 1)
+            { // Save Data
             }
-            else if(InputMode == 2) { // Save Other Data 
+            else if (InputMode == 2)
+            { // Save Other Data 
             }
             else
             {
@@ -188,7 +230,7 @@ namespace SerialTest
             if (inputstr[0] == 0x10)
             {
                 Debug.WriteLine("DLE");
-                RawDataLog += "DEBUG: " + inputstr.Substring(1)+'\n';
+                RawDataLog += "DEBUG: " + inputstr.Substring(1) + '\n';
             }
 
         }
@@ -229,7 +271,8 @@ namespace SerialTest
                 //btn.Content = new TextBlock() { Text = "Connect" };
                 this.Disconnect();
             }
-            else{
+            else
+            {
                 //btn.Content = new TextBlock() { Text = "Disconnect" };
                 this.Connect();
             }
@@ -246,6 +289,19 @@ namespace SerialTest
             NotifyPropertyChanged("Drives");
         }
         private ObservableCollection<DriveInfo> _Drives = new ObservableCollection<DriveInfo>();
+
+        public MainVM()
+        {
+            BankVM = new PatternBankVM();
+            BankVM.EditPattern += BankVM_EditPattern;
+        }
+
+        private void BankVM_EditPattern(object sender, PatternBank e)
+        {
+            CurrentBank = e;
+            owner.patview.VM.bank = CurrentBank;
+        }
+
         public ReadOnlyObservableCollection<DriveInfo> Drives
         {
             get => new ReadOnlyObservableCollection<DriveInfo>(_Drives);

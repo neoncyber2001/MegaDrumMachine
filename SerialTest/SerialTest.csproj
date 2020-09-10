@@ -197,19 +197,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\BankCommands.cs" />
     <Compile Include="Commands\SampleCommands.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="DesignDataLibrary.cs" />
     <Compile Include="FileScanner.cs" />
+    <Compile Include="FileWriter.cs" />
     <Compile Include="LibraryVM.cs" />
     <Compile Include="Models\AudioSample.cs" />
     <Compile Include="Models\Pattern.cs" />
     <Compile Include="Models\PatternBank.cs" />
     <Compile Include="Models\SampleTypes.cs" />
     <Compile Include="Models\PatternStep.cs" />
+    <Compile Include="PatternBankView.xaml.cs">
+      <DependentUpon>PatternBankView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatternBankVM.cs" />
     <Compile Include="PatternView.xaml.cs">
       <DependentUpon>PatternView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PatternVM.cs" />
     <Compile Include="RawDatalogger.cs" />
     <Compile Include="SampleLibrary.xaml.cs">
       <DependentUpon>SampleLibrary.xaml</DependentUpon>
@@ -232,6 +239,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PatternBankView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PatternView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

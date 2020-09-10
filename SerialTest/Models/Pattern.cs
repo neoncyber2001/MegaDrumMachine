@@ -9,6 +9,9 @@ namespace SerialTest.Models
     [Serializable]
     public class Pattern
     {
+        private int patternNumber;
+
+        public int PatternNumber { get => patternNumber; set => patternNumber = value; }
         public Pattern()
         {
             patternSteps = new List<PatternStep>(16);

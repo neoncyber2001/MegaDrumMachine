@@ -10,12 +10,25 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace SerialTest
 {
     public class FileScanner
     {
+        public String LocateDrumDataSD()
+        {
+            String ret = null;
+            DriveInfo.GetDrives().ToList().ForEach((d) =>
+            {
+                if (File.Exists(d.RootDirectory.FullName + ".drumdata.dat"))
+                {
+                    ret= d.Name;
+                    return;
+                }
+            });
+            return ret;
+        }
         public object ScratchLock = new object();
         public List<AudioSample> Scratch { get; set; }
         protected string fileSearch = "*.wav";

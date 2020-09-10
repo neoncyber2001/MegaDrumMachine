@@ -86,29 +86,33 @@ namespace SerialTest
 
         protected async Task ImportWavFiles()
         {
-            OpenFileDialog openFD = new OpenFileDialog();
-            openFD.Title = "Import Wav File";
-            openFD.Filter = "Audio Samples|*.wav";
-            openFD.Multiselect = true;
-            List<String> importCueue = new List<string>();
-            if (openFD.ShowDialog() == true)
+            Task tsk = new Task(() =>
             {
-                openFD.FileNames.ToList().ForEach((fn) => importCueue.Add(fn));
-            }
-            foreach (String Pth in importCueue)
-            {
-                if (File.Exists(Pth))
+                OpenFileDialog openFD = new OpenFileDialog();
+                openFD.Title = "Import Wav File";
+                openFD.Filter = "Audio Samples|*.wav";
+                openFD.Multiselect = true;
+                List<String> importCueue = new List<string>();
+                if (openFD.ShowDialog() == true)
                 {
-                    FileInfo info = new FileInfo(Pth);
-                    Add_AudioSamples(new AudioSample()
-                    {
-                        FileName = Path.GetFileName(Pth),
-                        LocalPath = Path.GetFullPath(Pth),
-                        size = info.Length
-                    });
-
+                    openFD.FileNames.ToList().ForEach((fn) => importCueue.Add(fn));
                 }
-            }
+                foreach (String Pth in importCueue)
+                {
+                    if (File.Exists(Pth))
+                    {
+                        FileInfo info = new FileInfo(Pth);
+                        Add_AudioSamples(new AudioSample()
+                        {
+                            FileName = Path.GetFileName(Pth),
+                            LocalPath = Path.GetFullPath(Pth),
+                            size = info.Length
+                        });
+
+                    }
+                }
+            });
+            await tsk;
         }
 
 
