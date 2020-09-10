@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MegaDrumMachine", "MegaDrum
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "..\..\..\Documents\Arduino\My Examples\HelloWorld\HelloWorld.vcxproj", "{2221ABE2-9897-480B-AEAA-3701ABFF719B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialTest", "SerialTest\SerialTest.csproj", "{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrumMachineDesktopApp", "SerialTest\DrumMachineDesktopApp.csproj", "{06E7A6F5-CF5A-4001-99A0-3E72B2118BF9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InterruptRotator", "..\..\..\Documents\Arduino\My Examples\InterruptRotator\InterruptRotator.vcxproj", "{1F00740E-E3E4-40C6-871C-B24C65C3F03D}"
 EndProject

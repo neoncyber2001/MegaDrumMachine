@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using SerialTest.Models;
-namespace SerialTest
+using DrumMachineDesktopApp.Models;
+namespace DrumMachineDesktopApp
 {
 
     public class PatternVM : INotifyPropertyChanged

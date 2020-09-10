@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SerialTest.Models
+namespace DrumMachineDesktopApp.Models
 {
     public enum SampleTypes
     {

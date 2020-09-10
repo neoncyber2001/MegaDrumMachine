@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SerialTest.Models;
-namespace SerialTest
+using DrumMachineDesktopApp.Models;
+namespace DrumMachineDesktopApp
 {
     /// <summary>
     /// Interaction logic for PatternView.xaml

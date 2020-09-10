@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SerialTest.Models
+namespace DrumMachineDesktopApp.Models
 {
     [Serializable]
     public class AudioSample

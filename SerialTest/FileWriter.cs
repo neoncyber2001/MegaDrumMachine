@@ -1,4 +1,4 @@
-﻿using SerialTest.Models;
+﻿using DrumMachineDesktopApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Runtime.Remoting.Messaging;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     public class FileWriter
     {

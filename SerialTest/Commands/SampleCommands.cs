@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SerialTest.Commands
+namespace DrumMachineDesktopApp.Commands
 {
     public static class SampleCommands
     {

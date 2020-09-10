@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using SerialTest.Models;
+using DrumMachineDesktopApp.Models;
 using System.Windows.Input;
 using Microsoft.Win32;
 using System.Media;
@@ -18,7 +18,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Windows;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     
 
@@ -84,35 +84,31 @@ namespace SerialTest
             NotifyPropertyChanged("AudioSamples");
         }
 
-        protected async Task ImportWavFiles()
-        {
-            Task tsk = new Task(() =>
+        protected void ImportWavFiles()
+        {            
+            OpenFileDialog openFD = new OpenFileDialog();
+            openFD.Title = "Import Wav File";
+            openFD.Filter = "Audio Samples|*.wav";
+            openFD.Multiselect = true;
+            List<String> importCueue = new List<string>();
+            if (openFD.ShowDialog() == true)
             {
-                OpenFileDialog openFD = new OpenFileDialog();
-                openFD.Title = "Import Wav File";
-                openFD.Filter = "Audio Samples|*.wav";
-                openFD.Multiselect = true;
-                List<String> importCueue = new List<string>();
-                if (openFD.ShowDialog() == true)
+                openFD.FileNames.ToList().ForEach((fn) => importCueue.Add(fn));
+            }
+            foreach (String Pth in importCueue)
+            {
+                if (File.Exists(Pth))
                 {
-                    openFD.FileNames.ToList().ForEach((fn) => importCueue.Add(fn));
-                }
-                foreach (String Pth in importCueue)
-                {
-                    if (File.Exists(Pth))
+                    FileInfo info = new FileInfo(Pth);
+                    Add_AudioSamples(new AudioSample()
                     {
-                        FileInfo info = new FileInfo(Pth);
-                        Add_AudioSamples(new AudioSample()
-                        {
-                            FileName = Path.GetFileName(Pth),
-                            LocalPath = Path.GetFullPath(Pth),
-                            size = info.Length
-                        });
+                        FileName = Path.GetFileName(Pth),
+                        LocalPath = Path.GetFullPath(Pth),
+                        size = info.Length
+                    });
 
-                    }
                 }
-            });
-            await tsk;
+            }
         }
 
 
@@ -153,17 +149,16 @@ namespace SerialTest
             {
                 FileStream stream = File.OpenRead(inFile);
                 BinaryFormatter formatter = new BinaryFormatter();
-                ObservableCollection<AudioSample> OutTest = (ObservableCollection<AudioSample>)formatter.Deserialize(stream);
-                stream.Close();
-                if (OutTest != null)
+                if ((ObservableCollection<AudioSample>)formatter.Deserialize(stream)!= null)
                 {
-                    _AudioSamples = OutTest;
+                    _AudioSamples = (ObservableCollection<AudioSample>)formatter.Deserialize(stream);
                 }
                 else
                 {
                     Debug.WriteLine("Out is not correct");
                     
                 }
+                stream.Close();
                 NotifyPropertyChanged("AudioSamples");
             }
         }
@@ -311,9 +306,9 @@ namespace SerialTest
             e.CanExecute = true;
         }
 
-        private async void ImportSamples_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void ImportSamples_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            await this.ImportWavFiles();
+            this.ImportWavFiles();
             //ToDo
         }
 

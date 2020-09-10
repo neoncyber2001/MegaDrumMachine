@@ -11,8 +11,8 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.IO;
-using SerialTest.Models;
-namespace SerialTest
+using DrumMachineDesktopApp.Models;
+namespace DrumMachineDesktopApp
 {
 
     public class MainVM : INotifyPropertyChanged

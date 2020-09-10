@@ -1,4 +1,4 @@
-﻿using SerialTest.Models;
+﻿using DrumMachineDesktopApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Documents;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     public class FileScanner
     {
@@ -24,6 +24,19 @@ namespace SerialTest
                 if (File.Exists(d.RootDirectory.FullName + ".drumdata.dat"))
                 {
                     ret= d.Name;
+                    return;
+                }
+            });
+            return ret;
+        }
+        public String LocateSampleDataSD()
+        {
+            String ret = null;
+            DriveInfo.GetDrives().ToList().ForEach((d) =>
+            {
+                if (File.Exists(d.RootDirectory.FullName + ".sampledata.dat"))
+                {
+                    ret = d.Name;
                     return;
                 }
             });

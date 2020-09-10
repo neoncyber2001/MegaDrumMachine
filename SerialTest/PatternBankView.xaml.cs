@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SerialTest.Models;
+using DrumMachineDesktopApp.Models;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     /// <summary>
     /// Interaction logic for PatternBankView.xaml

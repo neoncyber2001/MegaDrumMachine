@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SerialTest.Properties {
+namespace DrumMachineDesktopApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -79,13 +79,13 @@ namespace SerialTest.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\temp\\")]
-        public string TranscodeCachePath {
+        [global::System.Configuration.DefaultSettingValueAttribute("%USERPROFILE%\\SampleLibrary\\")]
+        public string Library {
             get {
-                return ((string)(this["TranscodeCachePath"]));
+                return ((string)(this["Library"]));
             }
             set {
-                this["TranscodeCachePath"] = value;
+                this["Library"] = value;
             }
         }
         

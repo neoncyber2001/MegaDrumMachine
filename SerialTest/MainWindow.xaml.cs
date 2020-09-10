@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

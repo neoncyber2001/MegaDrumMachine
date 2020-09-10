@@ -8,7 +8,7 @@ using System.Timers;
 using System.Collections.Concurrent;
 using System.IO;
 
-namespace SerialTest
+namespace DrumMachineDesktopApp
 {
     public static class RawDatalogger
     {
