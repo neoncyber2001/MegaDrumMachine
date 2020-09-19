@@ -29,14 +29,20 @@
     <Setting Name="VersionString" Type="System.String" Scope="Application">
       <Value Profile="(Default)">76rGd0wA58LHXdVb</Value>
     </Setting>
-    <Setting Name="BankFileHeader" Type="System.String" Scope="User">
+    <Setting Name="BankFileHeader" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AA.M4.PATT.BANK.</Value>
     </Setting>
-    <Setting Name="KitFileHeader" Type="System.String" Scope="User">
+    <Setting Name="KitFileHeader" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AA.M4.SAMPL.KIT.</Value>
     </Setting>
-    <Setting Name="MetaFileHeader" Type="System.String" Scope="User">
+    <Setting Name="MetaFileHeader" Type="System.String" Scope="Application">
       <Value Profile="(Default)">AA.M4.DRUM.DATA.</Value>
+    </Setting>
+    <Setting Name="SampleCardHiddenFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.sampleata.dat</Value>
+    </Setting>
+    <Setting Name="MachineCardHiddenFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.drumdata.dat</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -107,39 +107,48 @@ namespace DrumMachineDesktopApp.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.PATT.BANK.")]
         public string BankFileHeader {
             get {
                 return ((string)(this["BankFileHeader"]));
             }
-            set {
-                this["BankFileHeader"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.SAMPL.KIT.")]
         public string KitFileHeader {
             get {
                 return ((string)(this["KitFileHeader"]));
             }
-            set {
-                this["KitFileHeader"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AA.M4.DRUM.DATA.")]
         public string MetaFileHeader {
             get {
                 return ((string)(this["MetaFileHeader"]));
             }
-            set {
-                this["MetaFileHeader"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".sampleata.dat")]
+        public string SampleCardHiddenFile {
+            get {
+                return ((string)(this["SampleCardHiddenFile"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".drumdata.dat")]
+        public string MachineCardHiddenFile {
+            get {
+                return ((string)(this["MachineCardHiddenFile"]));
             }
         }
     }

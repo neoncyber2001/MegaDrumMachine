@@ -17,11 +17,14 @@ void ButtonReader::begin(bool pullups)
 		m_debouncer[i].attach(BTN_INPUT_START + i, useMode);
 		m_debouncer[i].interval(25);
 	}
+
+#ifdef READ_RESIST_MATRIX
 	pinMode(RBTN_PIN, INPUT);
+#endif
 }
 
 
-void ButtonReader::doScan()
+void ButtonReader::tick()
 {
 	//copy current button state to previouse button state
 	memcpy(&m_prevButtonState, &m_curButtonState, sizeof(uint8_t)*2);
@@ -47,6 +50,14 @@ void ButtonReader::doScan()
 	m_curButtonState[1] = m_curButtonState[1] ^ 0xFF;
 
 }
+
+#ifdef READ_RESIST_MATRIX
+
+int ButtonReader::getRBtnRaw()
+{
+	return m_rbtnRAWValue;
+}
+
 
 int ButtonReader::readRBtn()
 {
@@ -112,18 +123,6 @@ int ButtonReader::readRBtn()
 	return m_resistPadIndex;
 }
 
-void ButtonReader::checkButtons()
-{
-	//If this dosn't work as hoped. look into automatic ADC capture via DMA. reference https://github.com/TMRh20/AutoAnalogAudio
-
-	//readRBtn();
-	doScan();
-}
-
-bool ButtonReader::haveBtnsChanged()
-{
-	return m_haveButtonsChangd;
-}
 
 bool ButtonReader::haveRBtnsChanged()
 {
@@ -133,6 +132,46 @@ bool ButtonReader::haveRBtnsChanged()
 	else {
 		return false;
 	}
+}
+
+int ButtonReader::getRBtnPressed()
+{
+	if (m_isResistButonPressed) {
+		return m_resistPadIndex;
+	}
+	else {
+		return -1;
+	}
+}
+int ButtonReader::getRBtnReleased()
+{
+	if (m_isResistButonReleased) {
+		return m_resistPadIndex;
+	}
+	else {
+		return -1;
+	}
+
+}
+int ButtonReader::getRBtnDown()
+{
+	if (m_isResistButonDown) {
+		return m_resistPadIndex;
+	}
+	else {
+		return -1;
+	}
+}
+#endif
+
+void ButtonReader::checkButtons()
+{
+	tick();
+}
+
+bool ButtonReader::haveBtnsChanged()
+{
+	return m_haveButtonsChangd;
 }
 
 uint16_t ButtonReader::getButtonsPressed()
@@ -195,34 +234,7 @@ uint8_t ButtonReader::getRowDown(bool row)
 	}
 	return ob;
 }
-int ButtonReader::getRBtnPressed()
-{
-	if (m_isResistButonPressed) {
-		return m_resistPadIndex;
-	}
-	else {
-		return -1;
-	}
-}
-int ButtonReader::getRBtnReleased()
-{
-	if (m_isResistButonReleased) {
-		return m_resistPadIndex;
-	}
-	else {
-		return -1;
-	}
 
-}
-int ButtonReader::getRBtnDown()
-{
-	if (m_isResistButonDown) {
-		return m_resistPadIndex;
-	}
-	else {
-		return -1;
-	}
-}
 bool ButtonReader::isButtonPressed(byte index)
 {
 	if ((this->getButtonsPressed() & (0x01 << index)) > 0) {
@@ -253,7 +265,3 @@ bool ButtonReader::isButtonDown(byte index)
 	}
 }
 
-int ButtonReader::getRBtnRaw()
-{
-	return m_rbtnRAWValue;
-}

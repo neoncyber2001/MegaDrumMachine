@@ -22,10 +22,6 @@ ZeAXOLy5nh0wNL19
 #define VERSIONSTRING	"76rGd0wA58LHXdVb"
 
 #include <SPI.h>
-#include "LCDWidget.h"
-#include "LCDView.h"
-#include "LCDWidgets.h"
-#include "LCDWidgets.h"
 #include <RotaryEncoder.h>
 #include <LiquidCrystal.h>
 #include <string.h>
@@ -41,6 +37,10 @@ ZeAXOLy5nh0wNL19
 #include "Sequencer.h"
 #include "PatternBank.h"
 #include "DrumPattern.h"
+#include "LCDWidget.h"
+#include "LCDView.h"
+#include "ByteWidget.h"
+#include "BtnPad.h"
 
 #ifdef __SAMD51__ 
 	#include <SD.h>
@@ -58,9 +58,22 @@ ZeAXOLy5nh0wNL19
 	#include <EEPROM.h>
 #endif // 
 
+#define FUNCTION_PNL
+//#define RESIST_MATRIX
 
-//#define WTSerial	Serial
-//RotaryEncoder encoder(21, 20);
+//Encoder
+RotaryEncoder encoder(21, 20);
+//4 x Illuminated Function Buttons (Red: 30, White: 27 to 29) + Rotary Encoder Click(26)
+BtnPad FunctionPad;
+int FunctionPins[5] = { 26, 27, 28, 29, 30 };
+
+//Define pin numbers for the two outputs of the 3 way toggls switch used to select the Drum Machine's primary operating mode.
+// **NOTE** Drum Machine enters PROGRAM mode when PLAY_MODE_PIN and KIT_MODE_PIN are both HIGH (Assuming inputs are pulled up)...
+#define PLAY_MODE_PIN	24
+#define KIT_MODE_PIN	25
+
+//GloalVariable for currently Loaded Drum Kit
+//TODO: Add slot for second concurrent Kit with expanded or (synchronized second) Sequencer / Patterns
 DrumKit CurrentKit;
 
 #define UPDATE_PERIOD	250
@@ -80,19 +93,28 @@ DrumPattern bank[16];
 byte DrumPatternIndex=0;
 byte DrumPatternNext=0;
 byte CurrentInsSlot = 0;
-byte displayMode = 0;
+struct NavigationData {
+	int opMode = 0;
+	byte displayMode = 0;
+	bool NavMode = true;
+	byte prevIndex = 0;
+	byte itemIndex = 0;
+	byte items = 4;
+	bool UpdateUI = false;
+	bool RedrawUI = false;
+} NavData;
+
+/*byte displayMode = 0;
 bool NavMode = true;
 byte prevIndex = 0;
 byte itemIndex = 0;
-byte itemMax = 4;
+byte itemMax = 4;*/
 bool ProgramMode = 0;
-bool UpdateUI = false;
-bool RedrawUI = false;
 int* temporary = 0;
 wavTrigger wTrig;
 int gRateOffset = 0;
 bool isMetronomeRunning = false;
-
+long Crono = 0;
 #define SYSTK_METRO_A	1
 #define SYSTK_METRO_B	2
 
@@ -116,12 +138,16 @@ bool isMetronomeRunning = false;
 void setup() {
 	Serial.begin(9600);
 	reader.begin(true);
-	//DrumTriggerButtons
+	/*DrumTriggerButtons
 	for (int i = 0; i < 16; i++) {
 		pinMode(37 + i, INPUT_PULLUP);
-	}
+	}*/
+	FunctionPad.init(FunctionPins, 5, true);
+	//Set Pins for Mode Selector Switch;
+	pinMode(PLAY_MODE_PIN, INPUT_PULLUP);
+	pinMode(KIT_MODE_PIN, INPUT_PULLUP);
+	//LCD Setup
 	lcd.init();                      // initialize the lcd 
-//	lcd.init(); 
 	lcd.noAutoscroll();
 	lcd.noBlink();
 	lcd.noCursor();  
@@ -158,6 +184,7 @@ void setup() {
 	}
 	else {
 		SDBootLoad();
+		SD.end();
 	}
 #else
 	eepromBootLoad();
@@ -173,11 +200,11 @@ void setup() {
 		lcd.setCursor(0, 1);
 		lcd.print(20 - i, DEC);
 		lcd.setCursor(8, 1);
-		reader.doScan();
+		reader.tick();
 		lcd.print(reader.getButtonsDown(), HEX);
 		delay(100);
 	}
-	reader.doScan();
+	reader.tick();
 	if (reader.isButtonDown(0)) {
 		isAltBoot = true;
 	}
@@ -195,7 +222,7 @@ void setup() {
 	seq.init(&clk, &bank[0], onTrigger,bank);
 	clk.setOnStep(onStep);
 	clk.setOnBeat(onBeat);
-	setDisplayMode(0,1);
+	setMode(0,1);
 }
 
 #ifdef __SAMD51__
@@ -433,7 +460,7 @@ void  eepromBootLoad() {
 }
 #endif
 void onStep(uint32_t pulse, uint32_t steps) {
-	UpdateUI = true;	
+	updateUI();
 }
 
 
@@ -468,28 +495,49 @@ void onTrigger(byte trigger) {
 
 byte dsp = 0;
 
-void setDisplayMode(byte mode, byte items) {
-	displayMode = mode;
-	itemIndex = 0;
-	NavMode = true;
-	itemMax = items;
-	UpdateUI = true;
-	RedrawUI = true;
+void setMode(byte mode, byte items) {
+	NavData.opMode = mode;
+	NavData.displayMode=mode;
+	NavData.itemIndex = 0;
+	NavData.NavMode = true;
+	NavData.items = items;
+	NavData.UpdateUI;
+	NavData.RedrawUI = true;
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() {
+	/// Poll Inputs
+	encoder.tick();
+	reader.tick();
+	FunctionPad.tick();
+	Serial.println(millis()-Crono);
+	Crono = millis();
+	
+	if (encoder.getDirection() == RotaryEncoder::Direction::CLOCKWISE) {
+		if (NavData.itemIndex < NavData.items) {
+			NavData.itemIndex++;
+		}
+		else {
+			NavData.itemIndex = NavData.items;
+		}
+	}
+	else if(encoder.getDirection() == RotaryEncoder::Direction::COUNTERCLOCKWISE) {
+		if (NavData.itemIndex > 0) {
+			NavData.itemIndex--;
+		}
+		else {
+			NavData.itemIndex = 0;
+		}
+	}
 
 	if (isAltBoot) {
 		//Todo
 	}
-	else {
-		checkMode(displayMode);
-	}
-	reader.readRBtn();
-	//int btn = //analogRead(RBTN_PIN);
-
 #pragma region Static Mode Change and Function Buttons
+#ifdef RESIST_MATRIX
+	reader.readRBtn();
+
 	//These buttons always perform the same function 
 	// nomatter what the display mode is.
 	if (reader.getRBtnPressed() == 0) {
@@ -504,13 +552,13 @@ void loop() {
 	}
 	else if (reader.getRBtnPressed() == 5) {
 		isMetronomeRunning = !isMetronomeRunning;
-		UpdateUI = true;
+		updateUI();
 	}
 	else if (reader.getRBtnPressed() == 6) {
 		if (NavMode) {
 			if (itemIndex > 0) {
 				itemIndex--;
-				UpdateUI = true;
+				updateUI();
 			}
 		}
 		else {
@@ -526,13 +574,13 @@ void loop() {
 		else {
 			swapOut(itemIndex);
 		}
-		UpdateUI = true;
+		updateUI();
 	}
 	else if (reader.getRBtnPressed() == 8) {
 		if (NavMode) {
 			if (itemIndex < itemMax) {
 				itemIndex++;
-				UpdateUI = true;
+				updateUI();
 			}
 		}
 		else {
@@ -543,7 +591,7 @@ void loop() {
 	else if (reader.getRBtnPressed() == 9) {
 		if (!clk.isRunning()) {
 			clk.reset();
-			UpdateUI = true;
+			updateUI();
 		}
 	}
 	else if (reader.getRBtnPressed() == 10) {
@@ -553,75 +601,52 @@ void loop() {
 		else {
 			clk.stop();
 		}
-		UpdateUI = true;
+		updateUI();
 	}
 
 	if (reader.haveBtnsChanged()) {
 		if (displayMode == MODE_PLAY) doModeBtns();
 	}
+	#endif
+#ifdef FUNCTION_PNL
+	//Check to see if which mode we are in
+	bool playSw = digitalRead(PLAY_MODE_PIN);
+	bool kitSw = digitalRead(KIT_MODE_PIN);
+	if (!playSw&&kitSw) {
+		if (NavData.opMode != 0) {
+			setMode(MODE_PLAY,3);
+		}
+	}
+	else if (playSw && kitSw) {
+		if (NavData.opMode != 1) {
+			setMode(MODE_PROG, 3);
+		}
+	}
+	else if (playSw && !kitSw) {
+		if (NavData.opMode != 2) {
+			setMode(MODE_KIT, 3);
+		}
+	}
+
+#endif // FUNCTION_PNL
+
 #pragma endregion
 }
 
 
-void doModeBtns() {
-	uint16_t btn = reader.getButtonsPressed();
-	
-	for (int i = 0; i < 16; i++) {
-		if ((btn & (0x0001 << i)) > 0) {
-			DrumPatternNext = i;
-		}
+void PlayMode() {
+	if (NavData.RedrawUI) {
+		PlayMenuDraw();
+		
 	}
 }
 
-void chkModeBtns(byte mode) {
-	int rbtn = reader.getRBtnPressed();
-	if (rbtn != -1) {
-		switch (mode) {
-		case MODE_PLAY:
-			break;
-		case MODE_PROG:
-			break;
-		case MODE_KIT:
-			break;
-		case MODE_KSTOR:
-			break;
-		case MODE_PSTOR:
-			break;
-		default:
-			break;
-		}
-	}
+void updateUI() {
+	NavData.UpdateUI=true;
 }
 
 
-void checkMode(byte mode) {
-	clk.tick();
-	switch (mode) {
-	case MODE_PLAY:
-		if (RedrawUI) { 
-			PlayMenuDraw();
-			RedrawUI = false;
-		}
-		if (UpdateUI) {
-			PlayMenuUpdate();
-			UpdateUI = false;
-		}
-		break;	
-	case MODE_PROG:
-		if (RedrawUI) {
-			ProgramMenuDraw();
-			RedrawUI = false;
-		}
-		if (UpdateUI) {
-			ProgramMenuUpdate();
-			UpdateUI = false;
-		}
-		break;
-	default:
-		//nothing
-		break;
-	};
-}
+
 bool firstScreen = true;
 void PlayMenuDraw() {
 	lcd.clear();
@@ -649,15 +674,15 @@ void PlayMenuDraw() {
 void PlayMenuUpdate(){
 	lcd.setCursor(14, 0);
 	lcd.print(clk.getTempo(), DEC);
-	if (itemIndex == 0)lcd.print("#");
+	if (NavData.itemIndex == 0)lcd.print("#");
 	lcd.print("  ");
 	lcd.setCursor(24, 0);
 	lcd.print(DrumPatternIndex, DEC);
-	if (itemIndex == 1)lcd.print("#");
+	if (NavData.itemIndex == 1)lcd.print("#");
 	lcd.print(" ");
 	lcd.setCursor(35, 0);
 	lcd.print(DrumPatternNext, DEC);
-	if (itemIndex == 2)lcd.print("#");
+	if (NavData.itemIndex == 2)lcd.print("#");
 	lcd.print(" ");
 	lcd.setCursor(5, 1);
 	for (int i = 0; i < 16; i++) {
@@ -734,7 +759,7 @@ void ProgramMenuDraw() {
 void ProgramMenuUpdate() {
 	lcd.setCursor(14, 0);
 	lcd.print(clk.getTempo(), DEC);
-	if (itemIndex == 0) {
+	if (NavData.itemIndex == 0) {
 		lcd.print("* ");
 	}
 	else {
@@ -742,7 +767,7 @@ void ProgramMenuUpdate() {
 	}
 	lcd.setCursor(24, 0);
 	lcd.print(DrumPatternIndex, DEC);
-	if (itemIndex == 1) {
+	if (NavData.itemIndex == 1) {
 		lcd.print("* ");
 	}
 	else {
@@ -750,7 +775,7 @@ void ProgramMenuUpdate() {
 	}
 	lcd.setCursor(35, 0);
 	lcd.print(DrumPatternIndex, DEC);
-	if (itemIndex == 2) {
+	if (NavData.itemIndex == 2) {
 		lcd.print("* ");
 	}
 	else {
@@ -758,7 +783,7 @@ void ProgramMenuUpdate() {
 	}
 	lcd.setCursor(30, 3);
 	lcd.print((clk.getCurrentSteps()%16), DEC);
-	if (itemIndex == 3) {
+	if (NavData.itemIndex == 3) {
 		lcd.print("* ");
 	}
 	else {
@@ -797,7 +822,7 @@ void serialEvent() {
 }
 
 void swapIn(int item) {
-	if (displayMode == MODE_PLAY) {
+	if (NavData.displayMode == MODE_PLAY) {
 		switch (item) {
 		case 0:
 			*temporary = clk.getTempo();
@@ -810,7 +835,7 @@ void swapIn(int item) {
 			break;
 		}
 	}
-	else if (displayMode == MODE_PROG) {
+	else if (NavData.displayMode == MODE_PROG) {
 
 	}
 }

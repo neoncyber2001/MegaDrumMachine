@@ -18,9 +18,13 @@
 #error Bounce2 required.
 #endif // !Bounce2_h*/
 
+
+
 #define TOP_ROW	0
 #define BOT_ROW 1
 
+
+#ifdef READ_RESIST_MATRIX
 #define RBTN_00_VAL		1000
 #define RBTN_01_VAL		930
 #define RBTN_02_VAL		850
@@ -33,17 +37,9 @@
 #define RBTN_09_VAL		540
 #define RBTN_10_VAL		510
 #define RBTN_11_VAL		480
-
 #define RBTN_TOLERANCE	30
-
-#ifndef RBTN_PIN
- #define RBTN_PIN		A10
-#endif
-
-#ifndef RBTN_READ_MOD
-	#define RBTN_READ_MOD	2
-#endif // !RBTN_READ_MOD
-
+#define RBTN_PIN		A10
+#endif 
 
 class ButtonReader
 {
@@ -52,16 +48,17 @@ class ButtonReader
 	 uint8_t m_prevButtonState[2] = { 0x00,0x00 };
 	 Bounce m_debouncer[16];
 	 bool m_haveButtonsChangd = false;
-	 
+#ifdef READ_RESIST_MATRIX
 	 int m_rbtnRAWValue = 0;
 	 bool m_isResistButonDown = false;
 	 bool m_isResistButonPressed = false;
 	 bool m_isResistButonReleased = false;
 	 uint8_t m_resistPadIndex = 0;
+#endif
 
  public:
 	void begin(bool pullups = false);
-	void doScan();
+	void tick();
 	int readRBtn();
 	void checkButtons();
 	bool haveBtnsChanged();
@@ -72,13 +69,17 @@ class ButtonReader
 	uint8_t getRowReleased(bool row);
 	uint16_t getButtonsDown();
 	uint8_t getRowDown(bool row);
-	int getRBtnPressed();
-	int getRBtnReleased();
-	int getRBtnDown();
 	bool isButtonPressed(byte index);
 	bool isButtonReleased(byte index);
 	bool isButtonDown(byte index);
+
+#ifdef READ_RESIST_MATRIX
+	int getRBtnPressed();
+	int getRBtnReleased();
+	int getRBtnDown();
 	int getRBtnRaw();
+#endif
+
 };
 
 #endif

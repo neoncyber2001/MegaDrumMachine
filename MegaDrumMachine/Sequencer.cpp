@@ -91,7 +91,7 @@ void Sequencer::onStep(uint32_t pulses, uint32_t steps)
 {
 	if (m_isQueued && (steps%16)==0) {
 		m_pattern = m_queuedPattern;
-		setNextPattern(m_bnk[m_pattern->getNextPattern()]);
+		setNextPattern(&m_bnk[m_pattern->getNextPattern()]);
 	}
 	if (m_isOnTrigSet) {
 		m_onTrig(m_pattern->getStep(steps % 16));

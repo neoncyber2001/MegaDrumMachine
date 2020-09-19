@@ -156,7 +156,6 @@ namespace DrumMachineDesktopApp
                 else
                 {
                     Debug.WriteLine("Out is not correct");
-                    
                 }
                 stream.Close();
                 NotifyPropertyChanged("AudioSamples");

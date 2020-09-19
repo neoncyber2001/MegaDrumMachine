@@ -10,18 +10,47 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Threading;
+using System.Reflection;
 using System.Windows.Documents;
+using System.Windows.Input;
+using NAudio.Wave;
+using System.Threading;
+using System.Runtime.CompilerServices;
+using System.ServiceModel.Syndication;
 
 namespace DrumMachineDesktopApp
 {
     public class FileScanner
     {
+        private object FileErrorLock = new object();
+        private Queue<String> FileErrors = new Queue<string>();
+        public String getFileError()
+        {
+            lock (FileErrorLock)
+            {
+                return FileErrors.Dequeue();
+            }
+        }
+        public int getCueuedErrors() {
+            lock (FileErrorLock)
+            {
+                return FileErrors.Count;
+            }
+        }
+        protected void addFileError(String err)
+        {
+            lock (FileErrorLock)
+            {
+                FileErrors.Enqueue(err);
+            }
+        }
+
         public String LocateDrumDataSD()
         {
             String ret = null;
             DriveInfo.GetDrives().ToList().ForEach((d) =>
             {
-                if (File.Exists(d.RootDirectory.FullName + ".drumdata.dat"))
+                if (File.Exists(d.RootDirectory.Name + Properties.Settings.Default.MachineCardHiddenFile))
                 {
                     ret= d.Name;
                     return;
@@ -34,7 +63,7 @@ namespace DrumMachineDesktopApp
             String ret = null;
             DriveInfo.GetDrives().ToList().ForEach((d) =>
             {
-                if (File.Exists(d.RootDirectory.FullName + ".sampledata.dat"))
+                if (File.Exists(d.RootDirectory.Name + Properties.Settings.Default.SampleCardHiddenFile))
                 {
                     ret = d.Name;
                     return;
@@ -52,10 +81,82 @@ namespace DrumMachineDesktopApp
             hasher = MD5.Create();
         }
 
-        public List<AudioSample> ScanDirectoryForSamples(String path, bool recurse)
+        public async Task<List<AudioSample>> ScanDirectoryForSamples(String path, bool recurse)
         {
-            throw new NotImplementedException("This method is not yet implemented");
+            return await Task.Run(() =>
+            {
+
+                List<AudioSample> OutList = new List<AudioSample>();
+                List<string> fileCueue = new List<string>();
+                if (recurse)
+                {
+                    this.GetFilesFromDirsReurse(path).ToList().ForEach((f) => fileCueue.Add(f));
+                }
+                else
+                {
+                    Directory.GetFiles(path).ToList().ForEach((f) => fileCueue.Add(f));
+                }
+                fileCueue.ForEach((fileName) =>
+                {
+                    /*
+                    * Regex strings for sorting out files.
+                    * (?<NUM>[0-9]{3})(_(?<TYPE>\w+))?_(?<NAME>\S+).[wW][aA][vV]
+                    * (?<NUM>[0-9]{3})_(?<NAME>\S+).[wW][aA][vV]
+                    */
+                    Debug.WriteLine(Path.GetExtension(fileName));
+                    if (string.Equals(Path.GetExtension(fileName), ".wav") || string.Equals(Path.GetExtension(fileName), "wav"))
+                    {
+                        Debug.WriteLine(fileName);
+                        String file = Path.GetFileName(fileName);
+                        /*String numString = file.Substring(0, file.IndexOf((char)'_'));
+
+                        int num;
+                        string sampName;
+                        if (int.TryParse(numString, out num))
+                        {
+                            sampName = file.Substring(file.IndexOf((char)'_') + 1, (file.IndexOf((char)'.') - file.IndexOf((char)'_')));
+                        }
+                        else
+                        {
+                            num = -1;
+                            sampName = file;
+                        }
+                        Match m = FileNameParser.Match(file);
+                        int num = int.Parse(m.Groups["NUM"].Value);
+                        string sampname = m.Groups["NAME"].Value;
+                        */
+                        String hash = String.Empty;
+                        FileStream fs = File.OpenRead(fileName);
+                        try
+                        {
+                            hash = BitConverter.ToString(hasher.ComputeHash(fs));
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("EXCEPTION");
+                            Debug.WriteLine(ex.GetType().Name);
+                            Debug.WriteLine(ex.ToString());
+                            Debug.WriteLine(ex.Message);
+                            Debug.WriteLine(ex.StackTrace);
+                            Debug.WriteLine("on thread " + Thread.CurrentThread.ManagedThreadId.ToString());
+                            if (ex.GetType().GetTypeInfo().IsSubclassOf(typeof(System.IO.IOException)))
+                            {
+                                addFileError("Unable to process " + fileName + " due to an I/O Exception.\n" + ex.Message);
+                            }
+                        }
+                        finally
+                        {
+                            fs.Close();
+                        }
+                        OutList.Add(new AudioSample() { Checksum = hash, FileName = file, LocalPath = fileName});
+                    }
+                    //else skip
+                });
+                return OutList;
+            });
         }
+
+
 
         public async Task ScanAndCreateAuditFile(String path, bool recurse, String OutputFile)
         {
@@ -162,6 +263,7 @@ namespace DrumMachineDesktopApp
                 {
                     Directory.GetDirectories(path).ToList().ForEach((dir) =>
                     {
+                        Debug.WriteLine(dir);
                         GetFilesFromDirsReurse(dir).ForEach((a) => files.Add(a));
                     });
                     Directory.GetFiles(path, fileSearch).ToList().ForEach((f) => files.Add(f));
