@@ -9,7 +9,10 @@
 	#include "WProgram.h"
 #endif
 
-
+/// <summary>
+/// Not used
+/// </summary>
+/// <deprecated/>
 class ValueControl
 {
 protected:

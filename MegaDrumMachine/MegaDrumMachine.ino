@@ -19,6 +19,7 @@ SWD5rvANIJWBlVL6
 ZeAXOLy5nh0wNL19
 
 */
+
 #define VERSIONSTRING	"76rGd0wA58LHXdVb"
 
 #include <SPI.h>
@@ -40,6 +41,11 @@ ZeAXOLy5nh0wNL19
 #include "LCDWidget.h"
 #include "LCDView.h"
 #include "ByteWidget.h"
+#include "IVisibleWidget.h"
+#include "ISelectableWidget.h"
+#include "IntWidget.h"
+#include "PatternPositionIndicator.h"
+#include "IconIndicator.h"
 #include "BtnPad.h"
 
 #ifdef __SAMD51__ 
@@ -129,11 +135,21 @@ long Crono = 0;
 
 #endif // 
 
+#pragma region LCDView
 
-#pragma region encoder
+IntWidget* dispTempo;
+ByteWidget* dispCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
+ByteWidget* dispNextPattern = new ByteWidget(new String("NEXT"), 0, 30, &DrumPatternNext);
+IntWidget* dispBeat = new IntWidget(new String("BEAT"), 0, 20, clk.getBeatPtr(), true);
+PatternPositionIndicator* PatternProgress = new PatternPositionIndicator(0, 1, clk.getStepsPtr());
+IconIndicator*PlayingIcon = new IconIndicator(38, 0, (char)'>', clk.getRunningPtr());
+LCDView PlayView;
+IVisibleWidget* playIndicators[] = { PatternProgress,PlayingIcon };
+LCDWidget* playWidgets[] = { dispTempo, dispCurPattern, dispNextPattern, dispBeat };
 
 
 #pragma endregion
+
 
 void setup() {
 	Serial.begin(9600);
@@ -189,9 +205,6 @@ void setup() {
 #else
 	eepromBootLoad();
 #endif
-	/*
-
-	*/
 	delay(500);
 	lcd.clear();
 	lcd.setCursor(0, 0);
@@ -219,10 +232,13 @@ void setup() {
 	wTrig.stopAllTracks();
 	wTrig.samplerateOffset(0);
 	clk.init(true, false, false);
+	dispTempo = new IntWidget(new String("BPM"), 0, 10, clk.getTempoPtr());
 	seq.init(&clk, &bank[0], onTrigger,bank);
 	clk.setOnStep(onStep);
 	clk.setOnBeat(onBeat);
 	setMode(0,1);
+
+	PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
 }
 
 #ifdef __SAMD51__

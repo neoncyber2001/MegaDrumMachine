@@ -5,19 +5,31 @@
 #include "LCDView.h"
 
 
-void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry, LiquidCrystal_I2C*lcd)
+void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C*lcd)
 {
 	m_rows = rows;
 	m_cols = cols;
 	m_title = title;
 	m_count = widgetCount;
-	m_widgets = widgetArry;
+	m_widgets = *widgetArry;
 	m_lcd = lcd;
+}
+
+void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd)
+{
+	m_ind_count = indicatorCount;
+	m_indicators = *indicatorArray;
+	begin(rows, cols, title, widgetCount, widgetArry, lcd);
 }
 
 void LCDView::tick()
 {
 	if (m_drawRequired) {
+		m_lcd->clear();
+		m_lcd->setCursor(0, 0);
+		m_lcd->print("<");
+		m_lcd->print(m_title);
+		m_lcd->print(">");
 		for (int i = 0; i < m_count; i++) {
 			m_widgets[i].drawSelf(*m_lcd);
 		}
@@ -62,8 +74,10 @@ void LCDView::cmd_down()
 void LCDView::cmd_select()
 {
 	if (!m_isEditMode) {
-		m_widgets[m_selected].setEdit(true);
-		m_isEditMode = true;
+		if (!m_widgets[m_selected].isReadOnly()) {
+			m_widgets[m_selected].setEdit(true);
+			m_isEditMode = true;
+		}
 	}
 	else {
 		m_widgets[m_selected].setEdit(true);

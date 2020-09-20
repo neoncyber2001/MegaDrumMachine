@@ -12,20 +12,17 @@
 	#include "WProgram.h"
 #endif
 
-class ByteWidget: LCDWidget
+class ByteWidget: public LCDWidget
 {
  protected:
 	
 	 byte* m_boundVar;
 	 byte m_scratchVar;
-	/*
 	 byte m_row;
 	 byte m_col;
-	 String* Label;
-	 */
-
+	 String* m_label;
  public:
-	 ByteWidget(String* Label, byte row, byte col, byte* boundValue);
+	 ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool readOnly = false);
 
 	 // Inherited via LCDWidget
 	 virtual void NextValue() override;

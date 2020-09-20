@@ -69,6 +69,21 @@
     <ClInclude Include="WidgetData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IntWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IVisibleWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISelectableWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IconIndicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternPositionIndicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeatClock.cpp">
@@ -111,6 +126,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WidgetData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IntWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IVisibleWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IconIndicator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternPositionIndicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,13 +9,9 @@
 	#include "WProgram.h"
 #endif
 
-#ifdef BEATCLOCK_MICROS
-	#define __BEATTIME (1000000/(m_tempo/60))
-#define __TIMER	micros()
-#else
-	#define __BEATTIME (1000/(m_tempo/60))
-	#define __TIMER millis()
-#endif // BEATCLOCK_MICROS
+
+#define __BEATTIME (1000/(m_tempo/60))
+#define __TIMER millis()
 
 typedef void (*onPulseFn)(uint32_t);			//void onPulse(uint32_t pulses){...}
 typedef void (*onStepFn)(uint32_t, uint32_t);	//void onStep(uint32_t pulses, uint32_t steps){...}
@@ -24,10 +20,13 @@ typedef void (*onBeatFn)(uint32_t, uint32_t);	//void onStep(uint32_t pulses, uin
 #ifndef CLOCK_TRIGGER_PIN
 #define CLOCK_TRIGGER_PIN	LED_BUILTIN
 #endif // !CLOCK_TRIGGER_PIN
-
+/// <summary>
+/// Keeps timing (or is supposed to)
+/// </summary>
 class BeatClock
 {
  protected:
+	 
 	 bool m_spstate = 0;
 	 byte m_SyncPin=0;
 	 byte m_SyncMod = 1;
@@ -37,13 +36,15 @@ class BeatClock
 	 bool m_isPulseSet;
 	 bool m_isStepSet;
 	 bool m_isBeatSet;
-	 unsigned int m_pulses;
+	 int m_pulses;
 	 onPulseFn m_onPulse;
 	 onStepFn m_onStep;
 	 onBeatFn m_onBeat;
 	 int m_tempo; //in bpm
 	 int m_ppqn; //Pulses Per Quarter Note
 	 bool m_isRunning;
+	 int m_beats;
+	 int m_steps;
 	 unsigned long m_nextPulse;
 	 unsigned long m_pulseTime;
 	 unsigned long m_CalculatePulseTime();
@@ -65,6 +66,11 @@ class BeatClock
 	void stop();
 	void reset();
 	bool isRunning();
+	int* getTempoPtr() { return &m_tempo; }
+	int* getPulsePtr() { return &m_pulses; }
+	int* getBeatPtr() { return &m_beats; }
+	int* getStepsPtr() { return &m_steps; }
+	bool* getRunningPtr() { return &m_isRunning; }
 
 };
 

@@ -8,7 +8,7 @@
 #else
 	#include "WProgram.h"
 #endif
-
+//TODO: This class is nolonger required. Remove it.
 
 #endif
 

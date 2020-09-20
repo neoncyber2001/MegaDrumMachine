@@ -1,5 +1,6 @@
-C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\MegaDrumMachine.cpp.o: \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\MegaDrumMachine.cpp \
+C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IntWidget.cpp.o: \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IntWidget.cpp \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IntWidget.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/arduino.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/avr/pgmspace.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/avr/interrupt.h \
@@ -144,34 +145,7 @@ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_gra
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/Arduino.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/USB/USB_host.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/USB/samd21_host.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IntWidget.h \
  C:\Users\djneo\Documents\Arduino\libraries\LiquidCrystal_I2C/LiquidCrystal_I2C.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/Print.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Wire/Wire.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDWidget.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\SPI/SPI.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Adafruit_ZeroDMA/Adafruit_ZeroDMA.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Adafruit_ZeroDMA/utility/dma.h \
- C:\Users\djneo\Documents\Arduino\libraries\RotaryEncoder/RotaryEncoder.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\LiquidCrystal\src/LiquidCrystal.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ValueControl.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\DrumKit.h \
- C:\Users\djneo\Documents\Arduino\libraries\Bounce2\src/Bounce2.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ButtonReader.h \
- C:\Users\djneo\Documents\Arduino\libraries\WAV-Trigger-Arduino-Serial-Library-master/wavTrigger.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/HardwareSerial.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\BeatClock.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\Sequencer.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\DrumPattern.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\PatternBank.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDView.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ByteWidget.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\BtnPad.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/WString.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/SD.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFat.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2Card.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/Sd2PinMap.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdInfo.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/FatStructs.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\SD\src/utility/SdFatUtil.h
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDWidget.h

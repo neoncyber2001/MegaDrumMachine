@@ -2,9 +2,9 @@
 // 
 // 
 
-#include "ByteWidget.h"
+#include "IntWidget.h"
 
-ByteWidget::ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool readOnly = false)
+IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, bool readOnly = false)
 {
 	m_label = Label;
 	m_row = row;
@@ -16,43 +16,61 @@ ByteWidget::ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool
 	m_isReadOnly = readOnly;
 }
 
-void ByteWidget::NextValue()
+IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, onSubmitFn submitCB, bool readOnly)
+{
+	m_label = Label;
+	m_row = row;
+	m_col = col;
+	m_boundVar = boundValue;
+	m_scratchVar = *boundValue;
+	setOnSubmit(submitCB);
+	m_isSelected = false;
+	m_isEditing = false;
+	m_isReadOnly = readOnly;
+}
+
+void IntWidget::NextValue()
 {
 	if (m_isEditing) {
-		if (m_scratchVar < 255) {
+		if (m_scratchVar < m_ubound) {
 			m_scratchVar++;
 		}
 	}
 }
 
-void ByteWidget::PreviousValue()
+void IntWidget::PreviousValue()
 {
 	if (m_isEditing) {
-		if (m_scratchVar > 0) {
+		if (m_scratchVar > m_lbound) {
 			m_scratchVar--;
 		}
 	}
 }
 
-void ByteWidget::SubmitValue()
+void IntWidget::SubmitValue()
 {
 	*m_boundVar = m_scratchVar;
+	if (m_isSetOnSubmit) {
+		(m_onSubmit());
+	}
 }
 
-void ByteWidget::setSelected(bool val)
+void IntWidget::setSelected(bool val)
 {
 	m_isSelected = val;
 }
 
-void ByteWidget::setEdit(bool val)
+void IntWidget::setEdit(bool val)
 {
 	m_isEditing = val;
 }
 
-void ByteWidget::drawSelf(LiquidCrystal_I2C lcd)
+void IntWidget::drawSelf(LiquidCrystal_I2C lcd)
 {
 	lcd.setCursor(m_col, m_row);
-	lcd.print(m_label->substring(0, 4));
+	if (m_label->length() > 4) {
+		lcd.print(m_label->substring(0, 4));
+	}
 	lcd.print(":");
 	if (m_isEditing) {
 		lcd.print(m_scratchVar);
@@ -75,7 +93,7 @@ void ByteWidget::drawSelf(LiquidCrystal_I2C lcd)
 	}
 }
 
-void ByteWidget::updateSelf(LiquidCrystal_I2C lcd)
+void IntWidget::updateSelf(LiquidCrystal_I2C lcd)
 {
 	lcd.setCursor(m_col + 5, m_row);
 	if (m_isEditing) {
@@ -96,5 +114,13 @@ void ByteWidget::updateSelf(LiquidCrystal_I2C lcd)
 	else {
 		lcd.setCursor(m_col + 8, m_row);
 		lcd.print(" ");
+	}
+}
+
+void IntWidget::setValueConstrain(int min, int max)
+{
+	if (max > min) {
+		m_ubound = max;
+		m_lbound = min;
 	}
 }

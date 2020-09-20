@@ -100,6 +100,7 @@ void BeatClock::tick()
 				}
 			}
 			m_pulses++;
+			m_beats = (int)floor( m_pulses / 24);
 		}
 	}
 	if (__TIMER > m_nextPulse - (m_pulseTime / 2)&& m_spstate) {
@@ -120,7 +121,7 @@ unsigned int BeatClock::getCurrentSteps()
 
 unsigned int BeatClock::getCurrentBeats()
 {
-	return (uint32_t)floor(m_pulses / 24);
+	return m_beats;
 }
 
 void BeatClock::setTempo(int bpm)

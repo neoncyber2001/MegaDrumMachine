@@ -5,8 +5,8 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
-#include <LiquidCrystal_I2C.h>
-#include "LCDWidget.h"
+	#include <LiquidCrystal_I2C.h>
+	#include "LCDWidget.h"
 #else
 	#include "WProgram.h"
 #endif
@@ -15,7 +15,9 @@ class LCDView
 {
  protected:
 	 LCDWidget* m_widgets;
-	 int m_count;
+	 int m_count=0;
+	 IVisibleWidget* m_indicators;
+	 int m_ind_count=0;
 	 int m_selected=0;
 	 bool m_isEditMode = false;
 	 bool m_drawRequired = true;
@@ -25,7 +27,8 @@ class LCDView
 	 String m_title;
 	 LiquidCrystal_I2C*m_lcd;
  public:
-	void begin(byte rows, byte cols, String title, int widgetCount, LCDWidget * widgetArry, LiquidCrystal_I2C*lcd);
+	void begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C*lcd);
+	void begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd);
 	void tick();
 	void cmd_up();
 	void cmd_down();
