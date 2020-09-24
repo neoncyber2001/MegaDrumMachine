@@ -24,7 +24,7 @@ class IconIndicator:public IVisibleWidget
  public:
 	 IconIndicator(int column, int row, char icon, bool* var);
 	 // Inherited via IVisibleWidget
-	 virtual void drawSelf(LiquidCrystal_I2C lcd);
-	 virtual void updateSelf(LiquidCrystal_I2C lcd);
+	 virtual void drawSelf(LiquidCrystal_I2C *lcd);
+	 virtual void updateSelf(LiquidCrystal_I2C * lcd);
 };
 #endif

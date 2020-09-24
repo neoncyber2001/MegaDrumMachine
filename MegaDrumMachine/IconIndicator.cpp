@@ -12,9 +12,9 @@ IconIndicator::IconIndicator(int column, int row, char icon, bool* var)
 	m_boundVar = var;
 }
 
-void IconIndicator::drawSelf(LiquidCrystal_I2C lcd)
+void IconIndicator::drawSelf(LiquidCrystal_I2C *lcd)
 {
-	lcd.setCursor(m_col, m_row);
+	lcd->setCursor(m_col, m_row);
 	char mark;
 	if (*m_boundVar==true) {
 		mark = m_icon;
@@ -22,12 +22,12 @@ void IconIndicator::drawSelf(LiquidCrystal_I2C lcd)
 	else {
 		mark = (char)' ';
 	}
-	lcd.print(mark);
+	lcd->print(mark);
 }
 
-void IconIndicator::updateSelf(LiquidCrystal_I2C lcd)
+void IconIndicator::updateSelf(LiquidCrystal_I2C *lcd)
 {
-	lcd.setCursor(m_col, m_row);
+	lcd->setCursor(m_col, m_row);
 	char mark;
 	if (*m_boundVar == true) {
 		mark = m_icon;
@@ -35,5 +35,5 @@ void IconIndicator::updateSelf(LiquidCrystal_I2C lcd)
 	else {
 		mark = (char)' ';
 	}
-	lcd.print(mark);
+	lcd->print(mark);
 }

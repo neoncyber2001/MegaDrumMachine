@@ -46,9 +46,9 @@ public:
 
 	virtual void setEdit(bool val) override;
 
-	virtual void drawSelf(LiquidCrystal_I2C lcd) override;
+	virtual void drawSelf(LiquidCrystal_I2C *lcd) override;
 
-	virtual void updateSelf(LiquidCrystal_I2C lcd) override;
+	virtual void updateSelf(LiquidCrystal_I2C * lcd) override;
 
 	void setValueConstrain(int min, int max);
 

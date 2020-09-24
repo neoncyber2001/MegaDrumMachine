@@ -27,8 +27,8 @@ class LCDView
 	 String m_title;
 	 LiquidCrystal_I2C*m_lcd;
  public:
-	void begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C*lcd);
-	void begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd);
+	LCDView(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C* lcd);
+	LCDView(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd);
 	void tick();
 	void cmd_up();
 	void cmd_down();

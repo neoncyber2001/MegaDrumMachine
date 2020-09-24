@@ -65,55 +65,55 @@ void IntWidget::setEdit(bool val)
 	m_isEditing = val;
 }
 
-void IntWidget::drawSelf(LiquidCrystal_I2C lcd)
+void IntWidget::drawSelf(LiquidCrystal_I2C *lcd)
 {
-	lcd.setCursor(m_col, m_row);
+	lcd->setCursor(m_col, m_row);
 	if (m_label->length() > 4) {
-		lcd.print(m_label->substring(0, 4));
+		lcd->print(m_label->substring(0, 4));
 	}
-	lcd.print(":");
+	lcd->print(":");
 	if (m_isEditing) {
-		lcd.print(m_scratchVar);
-		lcd.print("  ");
+		lcd->print(m_scratchVar);
+		lcd->print("  ");
 	}
 	else {
-		lcd.print(*m_boundVar);
+		lcd->print(*m_boundVar);
 	}
 	if (m_isSelected && !m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)SELECTED_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)SELECTED_CHAR);
 	}
 	else if (m_isSelected && m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)EDIT_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)EDIT_CHAR);
 	}
 	else {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print(" ");
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print(" ");
 	}
 }
 
-void IntWidget::updateSelf(LiquidCrystal_I2C lcd)
+void IntWidget::updateSelf(LiquidCrystal_I2C *lcd)
 {
-	lcd.setCursor(m_col + 5, m_row);
+	lcd->setCursor(m_col + 5, m_row);
 	if (m_isEditing) {
-		lcd.print(m_scratchVar);
+		lcd->print(m_scratchVar);
 	}
 	else {
-		lcd.print(*m_boundVar);
+		lcd->print(*m_boundVar);
 	}
-	lcd.print("  ");
+	lcd->print("  ");
 	if (m_isSelected && !m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)SELECTED_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)SELECTED_CHAR);
 	}
 	else if (m_isSelected && m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)EDIT_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)EDIT_CHAR);
 	}
 	else {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print(" ");
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print(" ");
 	}
 }
 

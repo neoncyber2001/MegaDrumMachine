@@ -26,7 +26,7 @@ class LCDWidget:public ISelectableWidget, public IVisibleWidget
 protected:
 
 	onSubmitFn m_onSubmit;
-	boolian m_isSetOnSubmit = false;
+	bool m_isSetOnSubmit = false;
  public:
 
 	 virtual bool isReadOnly() {
@@ -54,9 +54,9 @@ protected:
 
 
 	 // Inherited via IVisibleWidget
-	 virtual void drawSelf(LiquidCrystal_I2C lcd) override = 0;
+	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override = 0;
 
-	 virtual void updateSelf(LiquidCrystal_I2C lcd) override = 0;
+	 virtual void updateSelf(LiquidCrystal_I2C * lcd) override = 0;
 
 };
 

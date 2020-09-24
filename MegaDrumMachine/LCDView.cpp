@@ -5,7 +5,7 @@
 #include "LCDView.h"
 
 
-void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C*lcd)
+LCDView::LCDView(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], LiquidCrystal_I2C*lcd)
 {
 	m_rows = rows;
 	m_cols = cols;
@@ -15,11 +15,11 @@ void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidg
 	m_lcd = lcd;
 }
 
-void LCDView::begin(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd)
+LCDView::LCDView(byte rows, byte cols, String title, int widgetCount, LCDWidget* widgetArry[], int indicatorCount, IVisibleWidget* indicatorArray[], LiquidCrystal_I2C* lcd)
 {
 	m_ind_count = indicatorCount;
 	m_indicators = *indicatorArray;
-	begin(rows, cols, title, widgetCount, widgetArry, lcd);
+	LCDView(rows, cols, title, widgetCount, widgetArry, lcd);
 }
 
 void LCDView::tick()

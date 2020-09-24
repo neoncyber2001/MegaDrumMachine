@@ -47,6 +47,7 @@ ZeAXOLy5nh0wNL19
 #include "PatternPositionIndicator.h"
 #include "IconIndicator.h"
 #include "BtnPad.h"
+#include "StepTriggerIndicator.h"
 
 #ifdef __SAMD51__ 
 	#include <SD.h>
@@ -136,16 +137,35 @@ long Crono = 0;
 #endif // 
 
 #pragma region LCDView
-
+//Play view
 IntWidget* dispTempo;
 ByteWidget* dispCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
 ByteWidget* dispNextPattern = new ByteWidget(new String("NEXT"), 0, 30, &DrumPatternNext);
 IntWidget* dispBeat = new IntWidget(new String("BEAT"), 0, 20, clk.getBeatPtr(), true);
 PatternPositionIndicator* PatternProgress = new PatternPositionIndicator(0, 1, clk.getStepsPtr());
 IconIndicator*PlayingIcon = new IconIndicator(38, 0, (char)'>', clk.getRunningPtr());
-LCDView PlayView;
 IVisibleWidget* playIndicators[] = { PatternProgress,PlayingIcon };
 LCDWidget* playWidgets[] = { dispTempo, dispCurPattern, dispNextPattern, dispBeat };
+LCDView * PlayView = new LCDView(2, 40, String("Play"), 4, playWidgets, 2, playIndicators, &lcd);
+//ProgramView
+byte curStep;
+DrumPattern* curPtn;
+void updateProgramPtrs() {
+	curStep=bank[DrumPatternIndex].getStep((clk.getCurrentSteps()%16));
+	curPtn=&bank[DrumPatternIndex];
+}
+
+StepTriggerIndicator* pgmStepInd = new StepTriggerIndicator(0, 1, &curStep);
+ByteWidget* pgmCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
+IntWidget* pgmCurStep = new IntWidget(new String("STP"), 0, 30, clk.getStepsPtr());
+
+IVisibleWidget* pgmIndicators[] = {pgmStepInd, PlayingIcon };
+LCDWidget* pgmWidgets[] = { pgmCurPattern, pgmCurStep };
+LCDView* PgmView = new LCDView(2, 40, String("Prog"), 2, pgmWidgets, 2, pgmIndicators, &lcd);
+
+
+LCDView* currentView = PlayView;
+//KitView
 
 
 #pragma endregion
@@ -238,7 +258,7 @@ void setup() {
 	clk.setOnBeat(onBeat);
 	setMode(0,1);
 
-	PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
+	//PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
 }
 
 #ifdef __SAMD51__
@@ -529,22 +549,31 @@ void loop() {
 	FunctionPad.tick();
 	Serial.println(millis()-Crono);
 	Crono = millis();
-	
+	currentView->tick();
 	if (encoder.getDirection() == RotaryEncoder::Direction::CLOCKWISE) {
+		currentView->cmd_up();
+		/*
 		if (NavData.itemIndex < NavData.items) {
 			NavData.itemIndex++;
 		}
 		else {
 			NavData.itemIndex = NavData.items;
 		}
+		*/
 	}
 	else if(encoder.getDirection() == RotaryEncoder::Direction::COUNTERCLOCKWISE) {
+		/*
 		if (NavData.itemIndex > 0) {
 			NavData.itemIndex--;
 		}
 		else {
 			NavData.itemIndex = 0;
 		}
+		*/
+		currentView->cmd_down();
+	}
+	if (FunctionPad.isButtonJustPressed(0)) {
+		currentView->cmd_select();
 	}
 
 	if (isAltBoot) {
@@ -625,10 +654,11 @@ void loop() {
 	}
 	#endif
 #ifdef FUNCTION_PNL
+
 	//Check to see if which mode we are in
 	bool playSw = digitalRead(PLAY_MODE_PIN);
 	bool kitSw = digitalRead(KIT_MODE_PIN);
-	if (!playSw&&kitSw) {
+/*	if (!playSw&&kitSw) {
 		if (NavData.opMode != 0) {
 			setMode(MODE_PLAY,3);
 		}
@@ -643,20 +673,20 @@ void loop() {
 			setMode(MODE_KIT, 3);
 		}
 	}
-
+	*/
 #endif // FUNCTION_PNL
 
 #pragma endregion
 }
 
-
+/*
 void PlayMode() {
 	if (NavData.RedrawUI) {
-		PlayMenuDraw();
+		//PlayMenuDraw();
 		
 	}
 }
-
+*/
 void updateUI() {
 	NavData.UpdateUI=true;
 }

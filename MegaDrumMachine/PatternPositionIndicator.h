@@ -24,9 +24,9 @@ class PatternPositionIndicator:public IVisibleWidget
 	 PatternPositionIndicator(int column, int row,  int* var);
 
 	 // Inherited via IVisibleWidget
-	 virtual void drawSelf(LiquidCrystal_I2C lcd) override;
+	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override;
 
-	 virtual void updateSelf(LiquidCrystal_I2C lcd) override;
+	 virtual void updateSelf(LiquidCrystal_I2C *lcd) override;
 
 };
 #endif

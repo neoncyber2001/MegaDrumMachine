@@ -84,6 +84,9 @@
     <ClInclude Include="PatternPositionIndicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StepTriggerIndicator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeatClock.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PatternPositionIndicator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StepTriggerIndicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

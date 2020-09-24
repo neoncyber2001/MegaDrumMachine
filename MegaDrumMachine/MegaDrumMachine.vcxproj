@@ -204,6 +204,7 @@
     <ClInclude Include="ISelectableWidget.h" />
     <ClInclude Include="PatternPositionIndicator.h" />
     <ClInclude Include="Sequencer.h" />
+    <ClInclude Include="StepTriggerIndicator.h" />
     <ClInclude Include="ValueControl.h" />
     <ClInclude Include="WidgetData.h" />
     <ClInclude Include="__vm\.MegaDrumMachine.vsarduino.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="PatternBank.cpp" />
     <ClCompile Include="PatternPositionIndicator.cpp" />
     <ClCompile Include="Sequencer.cpp" />
+    <ClCompile Include="StepTriggerIndicator.cpp" />
     <ClCompile Include="ValueControl.cpp" />
     <ClCompile Include="WidgetData.cpp" />
   </ItemGroup>

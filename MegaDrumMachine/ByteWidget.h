@@ -22,7 +22,7 @@ class ByteWidget: public LCDWidget
 	 byte m_col;
 	 String* m_label;
  public:
-	 ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool readOnly = false);
+	 ByteWidget(String* Label, byte row, byte col, byte* boundValue);
 
 	 // Inherited via LCDWidget
 	 virtual void NextValue() override;
@@ -35,9 +35,9 @@ class ByteWidget: public LCDWidget
 
 	 virtual void setEdit(bool val) override;
 
-	 virtual void drawSelf(LiquidCrystal_I2C lcd) override;
+	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override;
 
-	 virtual void updateSelf(LiquidCrystal_I2C lcd) override;
+	 virtual void updateSelf(LiquidCrystal_I2C * lcd) override;
 
 };
 

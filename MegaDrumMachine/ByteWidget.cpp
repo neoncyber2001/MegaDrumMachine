@@ -4,7 +4,7 @@
 
 #include "ByteWidget.h"
 
-ByteWidget::ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool readOnly = false)
+ByteWidget::ByteWidget(String* Label, byte row, byte col, byte* boundValue)
 {
 	m_label = Label;
 	m_row = row;
@@ -13,7 +13,7 @@ ByteWidget::ByteWidget(String* Label, byte row, byte col, byte* boundValue, bool
 	m_scratchVar = *boundValue;
 	m_isSelected = false;
 	m_isEditing = false;
-	m_isReadOnly = readOnly;
+//	m_isReadOnly = readOnly;
 }
 
 void ByteWidget::NextValue()
@@ -49,52 +49,52 @@ void ByteWidget::setEdit(bool val)
 	m_isEditing = val;
 }
 
-void ByteWidget::drawSelf(LiquidCrystal_I2C lcd)
+void ByteWidget::drawSelf(LiquidCrystal_I2C *lcd)
 {
-	lcd.setCursor(m_col, m_row);
-	lcd.print(m_label->substring(0, 4));
-	lcd.print(":");
+	lcd->setCursor(m_col, m_row);
+	lcd->print(m_label->substring(0, 4));
+	lcd->print(":");
 	if (m_isEditing) {
-		lcd.print(m_scratchVar);
-		lcd.print("  ");
+		lcd->print(m_scratchVar);
+		lcd->print("  ");
 	}
 	else {
-		lcd.print(*m_boundVar);
+		lcd->print(*m_boundVar);
 	}
 	if (m_isSelected && !m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)SELECTED_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)SELECTED_CHAR);
 	}
 	else if (m_isSelected && m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)EDIT_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)EDIT_CHAR);
 	}
 	else {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print(" ");
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print(" ");
 	}
 }
 
-void ByteWidget::updateSelf(LiquidCrystal_I2C lcd)
+void ByteWidget::updateSelf(LiquidCrystal_I2C * lcd)
 {
-	lcd.setCursor(m_col + 5, m_row);
+	lcd->setCursor(m_col + 5, m_row);
 	if (m_isEditing) {
-		lcd.print(m_scratchVar);
+		lcd->print(m_scratchVar);
 	}
 	else {
-		lcd.print(*m_boundVar);
+		lcd->print(*m_boundVar);
 	}
-	lcd.print("  ");
+	lcd->print("  ");
 	if (m_isSelected && !m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)SELECTED_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)SELECTED_CHAR);
 	}
 	else if (m_isSelected && m_isEditing) {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print((char)EDIT_CHAR);
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print((char)EDIT_CHAR);
 	}
 	else {
-		lcd.setCursor(m_col + 8, m_row);
-		lcd.print(" ");
+		lcd->setCursor(m_col + 8, m_row);
+		lcd->print(" ");
 	}
 }
