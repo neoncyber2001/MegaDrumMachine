@@ -16,10 +16,10 @@ class StepTriggerIndicator:public IVisibleWidget
  protected:
 	 int m_row;
 	 int m_col;
-	 byte* m_boundVar;
+	 byte m_boundVar;
 
  public:
-	 StepTriggerIndicator(int column, int row, byte* var);
+	 StepTriggerIndicator(int column, int row, byte var);
 	 // Inherited via IVisibleWidget
 	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override;
 	 virtual void updateSelf(LiquidCrystal_I2C *lcd) override;

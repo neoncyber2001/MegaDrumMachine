@@ -64,7 +64,7 @@ uint8_t Sequencer::getCurrentStep()
 		return m_pattern->getStep(m_recStep);
 	}
 	else {
-		return (m_clock->getCurrentSteps() % 16);
+		return m_pattern->getStep((*m_clock->getCurrentSteps() % 16));
 	}
 }
 
