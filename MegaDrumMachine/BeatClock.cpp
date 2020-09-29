@@ -6,7 +6,29 @@
 
 unsigned long BeatClock::m_CalculatePulseTime()
 {
-	return  round(__BEATTIME/m_ppqn);
+	return  round((1000000/(m_tempo / 60))/m_ppqn);
+}
+
+BeatClock::BeatClock()
+{
+	m_isClockMaster = true;
+	m_isTrigger = false;
+	m_isUartMidi = false;
+	m_isPulseSet = false;
+	m_isStepSet = false;
+	m_isBeatSet = false;
+	m_onPulse = nullptr;
+	m_onStep = nullptr;
+	m_onBeat = nullptr;
+
+	m_pulses = 0;
+	m_tempo = 120;
+	m_ppqn = 24;
+	m_isRunning = false;
+	m_nextPulse = 0;
+	m_pulseTime = this->m_CalculatePulseTime();
+	m_SyncPin = CLOCK_TRIGGER_PIN;
+	pinMode(m_SyncPin, OUTPUT);
 }
 
 void BeatClock::init()
@@ -85,10 +107,10 @@ void BeatClock::tick()
 		if (__TIMER > m_nextPulse) {
 			m_nextPulse = __TIMER + m_pulseTime;
 			if(m_isPulseSet)m_onPulse(m_pulses);
-			if (m_isTrigger && (m_pulses % m_SyncMod) == 0) {
+			/*if (m_isTrigger && (m_pulses % m_SyncMod) == 0) {
 				digitalWrite(m_SyncPin, HIGH);
 				m_spstate = true;
-			}
+			}*/
 			if (m_pulses % 6 == 0) {
 				//Sixteenth Note
 				uint32_t sixteenths = (uint32_t)floor(m_pulses / 6);
@@ -101,6 +123,7 @@ void BeatClock::tick()
 			}
 			m_pulses++;
 			m_beats = (int)floor( m_pulses / 24);
+			m_steps = (int)floor(m_pulses / 6);
 		}
 	}
 	if (__TIMER > m_nextPulse - (m_pulseTime / 2)&& m_spstate) {
@@ -109,19 +132,19 @@ void BeatClock::tick()
 	}
 }
 
-unsigned int BeatClock::getCurrentPulses()
+unsigned unsigned int* BeatClock::getCurrentPulses()
 {
-	return m_pulses;
+	return &m_pulses;
 }
 
-unsigned int BeatClock::getCurrentSteps()
+unsigned unsigned int* BeatClock::getCurrentSteps()
 {
-	return (uint32_t)floor(m_pulses / 6);
+	return &m_steps;
 }
 
-unsigned int BeatClock::getCurrentBeats()
+unsigned unsigned int* BeatClock::getCurrentBeats()
 {
-	return m_beats;
+	return &m_beats;
 }
 
 void BeatClock::setTempo(int bpm)
@@ -130,9 +153,9 @@ void BeatClock::setTempo(int bpm)
 	m_pulseTime = m_CalculatePulseTime();
 }
 
-int BeatClock::getTempo()
+unsigned int* BeatClock::getTempo()
 {
-	return m_tempo;
+	return &m_tempo;
 }
 
 void BeatClock::start()

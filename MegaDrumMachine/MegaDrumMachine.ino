@@ -20,6 +20,7 @@ ZeAXOLy5nh0wNL19
 
 */
 
+#include <MsTimer2.h>
 #define VERSIONSTRING	"76rGd0wA58LHXdVb"
 
 #include <SPI.h>
@@ -48,6 +49,7 @@ ZeAXOLy5nh0wNL19
 #include "IconIndicator.h"
 #include "BtnPad.h"
 #include "StepTriggerIndicator.h"
+
 
 #ifdef __SAMD51__ 
 	#include <SD.h>
@@ -150,18 +152,14 @@ LCDView * PlayView = new LCDView(2, 40, String("Play"), 4, playWidgets, 2, playI
 //ProgramView
 byte curStep;
 DrumPattern* curPtn;
-void updateProgramPtrs() {
-	curStep=bank[DrumPatternIndex].getStep((clk.getCurrentSteps()%16));
-	curPtn=&bank[DrumPatternIndex];
-}
 
-StepTriggerIndicator* pgmStepInd = new StepTriggerIndicator(0, 1, &curStep);
+//StepTriggerIndicator* pgmStepInd = new StepTriggerIndicator(0, 1, );
 ByteWidget* pgmCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
 IntWidget* pgmCurStep = new IntWidget(new String("STP"), 0, 30, clk.getStepsPtr());
 
-IVisibleWidget* pgmIndicators[] = {pgmStepInd, PlayingIcon };
+IVisibleWidget* pgmIndicators[] = {PlayingIcon };
 LCDWidget* pgmWidgets[] = { pgmCurPattern, pgmCurStep };
-LCDView* PgmView = new LCDView(2, 40, String("Prog"), 2, pgmWidgets, 2, pgmIndicators, &lcd);
+LCDView* PgmView = new LCDView(2, 40, String("Prog"), 2, pgmWidgets, 1, pgmIndicators, &lcd);
 
 
 LCDView* currentView = PlayView;
@@ -504,27 +502,7 @@ void onTrigger(byte trigger) {
 	for (byte i = 0; i < 8; i++) {
 		byte act = trigger & (0x01 << i);
 		if (act > 0) {
-			/*switch (i) {
-			case 0:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			case 1:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			case 0:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			case 0:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			case 0:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			case 0:
-				wTrig.trackPlayPoly(CurrentKit.getKick());
-				break;
-			}
-			*/
+			wTrig.trackPlayPoly(CurrentKit.getSample(i));
 		}
 	}
 }
@@ -719,7 +697,7 @@ void PlayMenuDraw() {
 }
 void PlayMenuUpdate(){
 	lcd.setCursor(14, 0);
-	lcd.print(clk.getTempo(), DEC);
+	lcd.print(*clk.getTempo(), DEC);
 	if (NavData.itemIndex == 0)lcd.print("#");
 	lcd.print("  ");
 	lcd.setCursor(24, 0);
@@ -732,7 +710,7 @@ void PlayMenuUpdate(){
 	lcd.print(" ");
 	lcd.setCursor(5, 1);
 	for (int i = 0; i < 16; i++) {
-		if (i <= (clk.getCurrentSteps()%16)) {
+		if (i <= (*clk.getCurrentSteps()%16)) {
 			if (i % 4 == 0) {
 				lcd.print((char)0xDB);
 			}
@@ -745,7 +723,7 @@ void PlayMenuUpdate(){
 		}
 	}
 	lcd.setCursor(25, 1);
-	lcd.print(((int)floor(clk.getCurrentBeats() / 4)),DEC);
+	lcd.print(((int)floor(*clk.getCurrentBeats() / 4)),DEC);
 	lcd.setCursor(39, 1);
 	if (clk.isRunning()) {
 		lcd.print(">");
@@ -804,7 +782,7 @@ void ProgramMenuDraw() {
 }
 void ProgramMenuUpdate() {
 	lcd.setCursor(14, 0);
-	lcd.print(clk.getTempo(), DEC);
+	lcd.print(*clk.getTempo(), DEC);
 	if (NavData.itemIndex == 0) {
 		lcd.print("* ");
 	}
@@ -828,7 +806,7 @@ void ProgramMenuUpdate() {
 		lcd.print("  ");
 	}
 	lcd.setCursor(30, 3);
-	lcd.print((clk.getCurrentSteps()%16), DEC);
+	lcd.print((*clk.getCurrentSteps()%16), DEC);
 	if (NavData.itemIndex == 3) {
 		lcd.print("* ");
 	}
@@ -871,7 +849,7 @@ void swapIn(int item) {
 	if (NavData.displayMode == MODE_PLAY) {
 		switch (item) {
 		case 0:
-			*temporary = clk.getTempo();
+			*temporary = *clk.getTempo();
 			break;
 		case 1:
 			break;
