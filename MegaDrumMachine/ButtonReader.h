@@ -24,23 +24,6 @@
 #define BOT_ROW 1
 
 
-#ifdef READ_RESIST_MATRIX
-#define RBTN_00_VAL		1000
-#define RBTN_01_VAL		930
-#define RBTN_02_VAL		850
-#define RBTN_03_VAL		790
-#define RBTN_04_VAL		730
-#define RBTN_05_VAL		680
-#define RBTN_06_VAL		640
-#define RBTN_07_VAL		600
-#define RBTN_08_VAL		570
-#define RBTN_09_VAL		540
-#define RBTN_10_VAL		510
-#define RBTN_11_VAL		480
-#define RBTN_TOLERANCE	30
-#define RBTN_PIN		A10
-#endif 
-
 class ButtonReader
 {
  protected:
@@ -48,13 +31,6 @@ class ButtonReader
 	 uint8_t m_prevButtonState[2] = { 0x00,0x00 };
 	 Bounce m_debouncer[16];
 	 bool m_haveButtonsChangd = false;
-#ifdef READ_RESIST_MATRIX
-	 int m_rbtnRAWValue = 0;
-	 bool m_isResistButonDown = false;
-	 bool m_isResistButonPressed = false;
-	 bool m_isResistButonReleased = false;
-	 uint8_t m_resistPadIndex = 0;
-#endif
 
  public:
 	void begin(bool pullups = false);
@@ -72,13 +48,6 @@ class ButtonReader
 	bool isButtonPressed(byte index);
 	bool isButtonReleased(byte index);
 	bool isButtonDown(byte index);
-
-#ifdef READ_RESIST_MATRIX
-	int getRBtnPressed();
-	int getRBtnReleased();
-	int getRBtnDown();
-	int getRBtnRaw();
-#endif
 
 };
 
