@@ -66,6 +66,7 @@ typedef int __builtin_bswap16;
 #include "samd.h"
 //#include "samd21/include/samd21.h"
 
+extern void* malloc(size_t __size); 
 
 
 #include "arduino.h"
