@@ -197,6 +197,7 @@
     <ClInclude Include="BtnPad.h" />
     <ClInclude Include="ButtonReader.h" />
     <ClInclude Include="ByteWidget.h" />
+    <ClInclude Include="DMPins.h" />
     <ClInclude Include="DrumKit.h" />
     <ClInclude Include="DrumPattern.h" />
     <ClInclude Include="IconIndicator.h" />

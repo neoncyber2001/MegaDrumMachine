@@ -87,6 +87,9 @@
     <ClInclude Include="StepTriggerIndicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DMPins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeatClock.cpp">
