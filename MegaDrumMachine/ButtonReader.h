@@ -35,10 +35,8 @@ class ButtonReader
  public:
 	void begin(bool pullups = false);
 	void tick();
-	int readRBtn();
 	void checkButtons();
 	bool haveBtnsChanged();
-	bool haveRBtnsChanged();
 	uint16_t getButtonsPressed();
 	uint8_t getRowPressed(bool row);
 	uint16_t getButtonsReleased();
