@@ -49,9 +49,11 @@ ZeAXOLy5nh0wNL19
 #include "IconIndicator.h"
 #include "BtnPad.h"
 #include "StepTriggerIndicator.h"
+#include "DMPins.h"
 
 
-#ifdef __SAMD51__ 
+#pragma region SDConstants
+
 	#include <SD.h>
 	#define SDFILE	"DRUMDATA.DAT"
 	#define SD_FILE_HEADER "AA.M4.DRUM.DATA."
@@ -63,14 +65,8 @@ ZeAXOLy5nh0wNL19
 	#define SD_KIT_FILE_B	"KITDATA_1.DAT"
 	#define SD_KIT_FILE_HEADER "AA.M4.SAMPL.KIT."
 
-#else
-	#include <EEPROM.h>
-#endif // 
+#pragma endregion
 
-#define FUNCTION_PNL
-//#define RESIST_MATRIX
-
-//Encoder
 RotaryEncoder encoder(21, 20);
 //4 x Illuminated Function Buttons (Red: 30, White: 27 to 29) + Rotary Encoder Click(26)
 BtnPad FunctionPad;
@@ -89,7 +85,7 @@ DrumKit CurrentKit;
 
 
 unsigned long NextValues=0;
-#define BTN_INPUT_START		36
+
 #ifndef __SAMD51__
 	#define EPOFFSET		0x02
 #endif
