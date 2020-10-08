@@ -5,6 +5,7 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
+    #include <LiquidCrystal_I2C.h>
 #else
 	#include "WProgram.h"
 #endif

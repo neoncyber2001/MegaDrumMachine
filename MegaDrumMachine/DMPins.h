@@ -28,9 +28,9 @@
 /**
  * Rotary Encoder
  */
-#define PIN_ROTARY_CLICK		22
-#define PIN_ROTARY_A			20
-#define PIN_ROTARY_B			21
+#define PIN_ROTARY_CLICK		26
+#define PIN_ROTARY_A			22
+#define PIN_ROTARY_B			23
 
 /**
  * Mode Toggle Switch
@@ -40,6 +40,8 @@
  */
 #define PIN_MODETOG_A			24
 #define PIN_MODETOG_B			25
+#define MODE_PLAY				PIN_MODETOG_A
+#define MODE_KIT				PIN_MODETOG_B
 
 /**
  * PushButtons
@@ -48,11 +50,10 @@
  * BTNRED	Play/Stop
  */
 
-#define PIN_BTN_C
-#define PIN_BTN_RED		
-#define PIN_BTN_B
-#define PIN_BTN_A
-
+#define PIN_BTN_RED			28
+#define PIN_BTN_A			31
+#define PIN_BTN_B			29
+#define PIN_BTN_C			27
 
 /**
  * WavTrigger

@@ -67,10 +67,10 @@ class BeatClock
 	void stop();
 	void reset();
 	bool isRunning();
-	int* getTempoPtr() { return &m_tempo; }
-	int* getPulsePtr() { return &m_pulses; }
-	int* getBeatPtr() { return &m_beats; }
-	int* getStepsPtr() { return &m_steps; }
+	unsigned int* getTempoPtr() { return &m_tempo; }
+	unsigned int* getPulsePtr() { return &m_pulses; }
+	unsigned int* getBeatPtr() { return &m_beats; }
+	unsigned int* getStepsPtr() { return &m_steps; }
 	bool* getRunningPtr() { return &m_isRunning; }
 
 };

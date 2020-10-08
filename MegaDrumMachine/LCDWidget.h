@@ -54,9 +54,9 @@ protected:
 
 
 	 // Inherited via IVisibleWidget
-	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override = 0;
+	 virtual void drawSelf(LiquidCrystal_I2C *lcd) = 0;
 
-	 virtual void updateSelf(LiquidCrystal_I2C * lcd) override = 0;
+	 virtual void updateSelf(LiquidCrystal_I2C * lcd) = 0;
 
 };
 

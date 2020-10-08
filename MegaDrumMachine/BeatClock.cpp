@@ -132,17 +132,17 @@ void BeatClock::tick()
 	}
 }
 
-unsigned unsigned int* BeatClock::getCurrentPulses()
+unsigned int* BeatClock::getCurrentPulses()
 {
 	return &m_pulses;
 }
 
-unsigned unsigned int* BeatClock::getCurrentSteps()
+unsigned int* BeatClock::getCurrentSteps()
 {
 	return &m_steps;
 }
 
-unsigned unsigned int* BeatClock::getCurrentBeats()
+unsigned int* BeatClock::getCurrentBeats()
 {
 	return &m_beats;
 }

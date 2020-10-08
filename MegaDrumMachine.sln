@@ -37,9 +37,6 @@ Global
 		..\..\..\Documents\Arduino\libraries\Metro\Metro-0.0.0.vcxitems*{78262700-761d-464f-ac2b-f5cb09b8c75f}*SharedItemsImports = 9
 		..\..\..\Documents\Arduino\libraries\elapsedMillis\elapsedMillis-1.0.6.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
 		..\..\..\Documents\Arduino\libraries\Metro\Metro-0.0.0.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		..\..\..\Documents\Arduino\libraries\MsTimer2\MsTimer2-1.1.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		..\..\..\Documents\Arduino\libraries\TimerOne\TimerOne-1.1.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
-		..\..\..\Documents\Arduino\libraries\TimerThree\TimerThree-1.1.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
 		..\..\..\Documents\Arduino\libraries\TimerOne\TimerOne-1.1.vcxitems*{cc862d17-0a40-482b-a09f-0516324ec352}*SharedItemsImports = 9
 		..\..\..\Documents\Arduino\libraries\TimerThree\TimerThree-1.1.vcxitems*{d270d62b-462a-4332-8fdf-bc7c6759c1a0}*SharedItemsImports = 9
 		..\..\..\Documents\Arduino\libraries\MsTimer2\MsTimer2-1.1.vcxitems*{deb8879e-35b6-42ee-a8f4-788f8ece8c9f}*SharedItemsImports = 9

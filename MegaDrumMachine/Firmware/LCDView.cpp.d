@@ -148,4 +148,6 @@ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_gra
  C:\Users\djneo\Documents\Arduino\libraries\LiquidCrystal_I2C/LiquidCrystal_I2C.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/Print.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Wire/Wire.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDWidget.h
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDWidget.h \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ISelectableWidget.h \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IVisibleWidget.h

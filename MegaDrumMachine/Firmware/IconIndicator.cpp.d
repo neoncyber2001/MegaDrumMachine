@@ -1,6 +1,6 @@
-C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ByteWidget.cpp.o: \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ByteWidget.cpp \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ByteWidget.h \
+C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IconIndicator.cpp.o: \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IconIndicator.cpp \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IconIndicator.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/arduino.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/avr/pgmspace.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/avr/interrupt.h \
@@ -145,9 +145,7 @@ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_gra
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/Arduino.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/USB/USB_host.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/USB/samd21_host.h \
+ C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IVisibleWidget.h \
  C:\Users\djneo\Documents\Arduino\libraries\LiquidCrystal_I2C/LiquidCrystal_I2C.h \
  C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\cores\arduino/Print.h \
- C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Wire/Wire.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\LCDWidget.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\ISelectableWidget.h \
- C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware\IVisibleWidget.h
+ C:\Users\djneo\AppData\Local\arduino15\packages\adafruit\hardware\samd\1.5.14\libraries\Wire/Wire.h

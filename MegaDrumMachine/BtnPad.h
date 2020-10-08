@@ -25,6 +25,7 @@ class BtnPad
 	 byte* m_Released;
 	 int m_buffSize;
 	 Bounce* m_debouncer;
+	 byte* scratchBuffer;
 
  public:
 	/// <summary>
@@ -33,7 +34,7 @@ class BtnPad
 	/// <param name="pins">Array of arduino Pin Numbers which will be used as button inputs.</param>
 	/// <param name="pinCount"></param>
 	/// <param name="pullups"></param>
-	void init(int*pins,int pinCount, bool pullups=false);
+	void init(int*pins,int pinCount, bool pullups);
 	void tick();
 	int getBufferSize() { return m_buffSize; };
 	void getPressedButtons(byte* buffer);

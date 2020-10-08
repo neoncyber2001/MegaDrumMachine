@@ -5,7 +5,7 @@
 #include "PatternPositionIndicator.h"
 
 
-PatternPositionIndicator::PatternPositionIndicator(int column, int row, int* var)
+PatternPositionIndicator::PatternPositionIndicator(int column, int row, unsigned int* var)
 {
 	m_col = column;
 	m_row = row;

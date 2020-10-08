@@ -32,7 +32,7 @@ protected:
 	int m_lbound = -__INTMIN__;
 
 public:
-	IntWidget(String* Label, byte row, byte col, int* boundValue, bool readOnly=false);
+	IntWidget(String* Label, byte row, byte col, int* boundValue, bool readOnly);
 
 	IntWidget(String* Label, byte row, byte col, int* boundValue, onSubmitFn submitCB, bool readOnly);
 	// Inherited via LCDWidget

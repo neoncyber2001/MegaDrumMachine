@@ -15,6 +15,7 @@ void BtnPad::init(int *pins, int pinCount, bool pullups)
 	m_Pressed = (byte*)malloc((size_t)m_buffSize * sizeof(byte));
 	m_JustPressed = (byte*)malloc((size_t)m_buffSize * sizeof(byte));
 	m_Released = (byte*)malloc((size_t)m_buffSize * sizeof(byte));
+	scratchBuffer = (byte*)malloc((size_t)m_buffSize * sizeof(byte));
 
 	int mark;
 	if (pullups) {
@@ -32,8 +33,9 @@ void BtnPad::init(int *pins, int pinCount, bool pullups)
 
 void BtnPad::tick()
 {
-	byte* scratchBuffer;
-	scratchBuffer = (byte*)calloc((size_t)m_buffSize,sizeof(byte));
+	for (int i = 0; i < m_buffSize;  i++) {
+		scratchBuffer[i] = 0x00;
+	}
 	for (int i = 0; i < m_btnCount; i++) {
 #if BTN_PAD_INVERT == 0
 		if (digitalRead(m_btnPins[i])) {
@@ -98,8 +100,10 @@ inline bool BtnPad::isButtonReleased(int index) {
 
 BtnPad::~BtnPad()
 {
+	/*
 	free(m_Pressed);
 	free(m_JustPressed);
 	free(m_Released);
 	free(m_debouncer);
+	*/
 }

@@ -20,24 +20,21 @@ ZeAXOLy5nh0wNL19
 
 */
 
-#include <MsTimer2.h>
-#define VERSIONSTRING	"76rGd0wA58LHXdVb"
+#include "ButtonsSimple.h"
+#include "UIntWidget.h"
+#define VERSIONSTRING "76rGd0wA58LHXdVb"
 
 #include <SPI.h>
 #include <RotaryEncoder.h>
 #include <LiquidCrystal.h>
 #include <string.h>
-#include "ValueControl.h"
-#include "DrumKit.h"
-#include <Arduino.h>
-#include <Bounce2.h>
-#include "ButtonReader.h"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <wavTrigger.h>
-#include "BeatClock.h"
-#include "Sequencer.h"
-#include "PatternBank.h"
+#include <Arduino.h>
+#include <Bounce2.h>
+
+#include "ValueControl.h"
 #include "DrumPattern.h"
 #include "LCDWidget.h"
 #include "LCDView.h"
@@ -47,10 +44,48 @@ ZeAXOLy5nh0wNL19
 #include "IntWidget.h"
 #include "PatternPositionIndicator.h"
 #include "IconIndicator.h"
-#include "BtnPad.h"
 #include "StepTriggerIndicator.h"
+
+#include "DrumKit.h"
+#include "BeatClock.h"
+#include "Sequencer.h"
+#include "PatternBank.h"
+
+
+#include "ButtonReader.h"
+#include "BtnPad.h"
 #include "DMPins.h"
 
+
+volatile bool KnobStep = 0;
+volatile bool KnobDir = 0;
+int KnobValue = 0;
+void setStep(bool _dir) {
+	if (!KnobStep) {
+		KnobStep = true;
+		KnobDir = _dir;
+	}
+};
+static void update() {
+	if (KnobStep) {
+		if (KnobDir) {
+			KnobValue++;
+		}
+		else {
+			KnobValue--;
+		}
+		KnobStep = false;
+	}
+} ;
+
+void KnobISR() {
+	if (digitalRead(PIN_ROTARY_B)) {
+		setStep(true);
+	}
+	else {
+		setStep(false);
+	}
+}
 
 #pragma region SDConstants
 
@@ -67,15 +102,11 @@ ZeAXOLy5nh0wNL19
 
 #pragma endregion
 
-RotaryEncoder encoder(21, 20);
+RotaryEncoder *encoder = new RotaryEncoder(PIN_ROTARY_A, PIN_ROTARY_B);
 //4 x Illuminated Function Buttons (Red: 30, White: 27 to 29) + Rotary Encoder Click(26)
-BtnPad FunctionPad;
-int FunctionPins[5] = { 26, 27, 28, 29, 30 };
+//BtnPad FunctionPad;
+int FunctionPins[5] = { PIN_ROTARY_CLICK, PIN_BTN_C, PIN_BTN_RED, PIN_BTN_B, PIN_BTN_A };
 
-//Define pin numbers for the two outputs of the 3 way toggls switch used to select the Drum Machine's primary operating mode.
-// **NOTE** Drum Machine enters PROGRAM mode when PLAY_MODE_PIN and KIT_MODE_PIN are both HIGH (Assuming inputs are pulled up)...
-#define PLAY_MODE_PIN	24
-#define KIT_MODE_PIN	25
 
 //GloalVariable for currently Loaded Drum Kit
 //TODO: Add slot for second concurrent Kit with expanded or (synchronized second) Sequencer / Patterns
@@ -130,16 +161,15 @@ long Crono = 0;
 #define MODE_PSTOR  0x03
 #define MODE_KSTOR	0x04
 
-#ifdef __SAMD51__
-
-#endif // 
+//DEV OPTIONS
+#define BUTTON_TEST
 
 #pragma region LCDView
 //Play view
-IntWidget* dispTempo;
+UIntWidget* dispTempo = new UIntWidget(new String("BPM"), 0, 10, clk.getTempoPtr(), false);
 ByteWidget* dispCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
 ByteWidget* dispNextPattern = new ByteWidget(new String("NEXT"), 0, 30, &DrumPatternNext);
-IntWidget* dispBeat = new IntWidget(new String("BEAT"), 0, 20, clk.getBeatPtr(), true);
+UIntWidget* dispBeat = new UIntWidget(new String("BEAT"), 0, 20, clk.getBeatPtr(), true);
 PatternPositionIndicator* PatternProgress = new PatternPositionIndicator(0, 1, clk.getStepsPtr());
 IconIndicator*PlayingIcon = new IconIndicator(38, 0, (char)'>', clk.getRunningPtr());
 IVisibleWidget* playIndicators[] = { PatternProgress,PlayingIcon };
@@ -151,7 +181,7 @@ DrumPattern* curPtn;
 
 //StepTriggerIndicator* pgmStepInd = new StepTriggerIndicator(0, 1, );
 ByteWidget* pgmCurPattern = new ByteWidget(new String("PAT"), 0, 20, &DrumPatternIndex);
-IntWidget* pgmCurStep = new IntWidget(new String("STP"), 0, 30, clk.getStepsPtr());
+UIntWidget* pgmCurStep = new UIntWidget(new String("STP"), 0, 30, clk.getStepsPtr(), false);
 
 IVisibleWidget* pgmIndicators[] = {PlayingIcon };
 LCDWidget* pgmWidgets[] = { pgmCurPattern, pgmCurStep };
@@ -164,28 +194,8 @@ LCDView* currentView = PlayView;
 
 #pragma endregion
 
-
-void setup() {
-	Serial.begin(9600);
-	reader.begin(true);
-	/*DrumTriggerButtons
-	for (int i = 0; i < 16; i++) {
-		pinMode(37 + i, INPUT_PULLUP);
-	}*/
-	FunctionPad.init(FunctionPins, 5, true);
-	//Set Pins for Mode Selector Switch;
-	pinMode(PLAY_MODE_PIN, INPUT_PULLUP);
-	pinMode(KIT_MODE_PIN, INPUT_PULLUP);
-	//LCD Setup
-	lcd.init();                      // initialize the lcd 
-	lcd.noAutoscroll();
-	lcd.noBlink();
-	lcd.noCursor();  
-	lcd.backlight();
-	lcd.clear();
-	lcd.setCursor(0, 0);
-	
-#ifdef __SAMD51__
+#pragma region SDSetup
+ void SDSetup() {
 	if (!SD.begin()) {
 		lcd.setCursor(3, 0);
 		lcd.print("SD Card Init Failure. Please check");
@@ -216,41 +226,117 @@ void setup() {
 		SDBootLoad();
 		SD.end();
 	}
+}
+#pragma endregion
+
+#pragma region Check for Boot Buttons
+ void CheckAltBoot() {
+	 lcd.clear();
+	 lcd.setCursor(0, 0);
+	 lcd.print("Checking for boot mod buttons...");
+	 for (int i = 0; i < 20; i++) {
+		 lcd.setCursor(0, 1);
+		 lcd.print(20 - i, DEC);
+		 lcd.setCursor(8, 1);
+		 reader.tick();
+		 lcd.print(reader.getButtonsDown(), HEX);
+		 delay(100);
+	 }
+	 reader.tick();
+	 if (reader.isButtonDown(0)) {
+		 isAltBoot = true;
+	 }
+ }
+#pragma endregion
+
+#pragma region WaveTrigger
+ void initWaveTrigger() {
+	 wTrig.start();
+	 delay(10);
+	 wTrig.stopAllTracks();
+	 wTrig.samplerateOffset(0);
+ }
+#pragma endregion
+
+#pragma region CheckModeToggle
+ void CheckMode() {
+	 bool playSw = digitalRead(PIN_MODETOG_A);
+	 bool kitSw = digitalRead(PIN_MODETOG_B);
+#ifdef BUTTON_TEST
+
+	 lcd.setCursor(4, 0);
+	 if (playSw) {
+		 lcd.print("P");
+	 }
+	 else {
+		 lcd.print("-");
+	 }
+
+	 lcd.setCursor(5, 0);
+	 if (kitSw) {
+
+		 lcd.print("K");
+	 }
+	 else {
+		 lcd.print("-");
+	 }
 #else
-	eepromBootLoad();
+	//TODO;
 #endif
-	delay(500);
+
+}
+
+#pragma endregion
+ 
+ ButtonsSimple *btns = new ButtonsSimple();
+void setup() {
+	Serial.begin(9600);
+	reader.begin(true);
+	//FunctionPad.init(FunctionPins, 5,false);
+	btns->Add(PIN_ROTARY_CLICK, INPUT);
+	btns->Add(PIN_BTN_RED, INPUT);
+	btns->Add(PIN_BTN_A, INPUT);
+	btns->Add(PIN_BTN_B, INPUT);
+	btns->Add(PIN_BTN_C, INPUT);
+	btns->Add(PIN_MODETOG_A, INPUT);
+	btns->Add(PIN_MODETOG_B, INPUT);
+	btns->Start();
+	attachInterrupt(digitalPinToInterrupt(PIN_ROTARY_A), KnobISR, HIGH);
+	//Set Pins for Mode Selector Switch;
+//	pinMode(PIN_MODETOG_A, INPUT);
+//	pinMode(PIN_MODETOG_B, INPUT);
+	//LCD Setup
+	lcd.init();                      // initialize the lcd 
+	lcd.noAutoscroll();
+	lcd.noBlink();
+	lcd.noCursor();  
+	lcd.backlight();
 	lcd.clear();
 	lcd.setCursor(0, 0);
-	lcd.print("Checking for boot mod buttons...");
-	for (int i = 0; i < 20; i++) {
-		lcd.setCursor(0, 1);
-		lcd.print(20 - i, DEC);
-		lcd.setCursor(8, 1);
-		reader.tick();
-		lcd.print(reader.getButtonsDown(), HEX);
-		delay(100);
-	}
-	reader.tick();
-	if (reader.isButtonDown(0)) {
-		isAltBoot = true;
-	}
+#ifndef BUTTON_TEST
+#ifdef __SAMD51__
+	SDSetup();
+#else
+#error Currently only SAMD15 supported
+#endif
+
+	delay(500);
+	CheckAltBoot();
 	lcd.clear();
 	lcd.setCursor(16,0);
 	lcd.print("DR-2650");
 	lcd.setCursor(7,1);
 	lcd.print("WAV TRIGGER - DRUM MACHINE");
 	delay(1000);
-	wTrig.start();
-	delay(10);  
-	wTrig.stopAllTracks();
-	wTrig.samplerateOffset(0);
+	initWaveTrigger();
+	//Init clock and sequencer
+	seq.init(&clk, &bank[0], onTrigger, bank);
 	clk.init(true, false, false);
-	dispTempo = new IntWidget(new String("BPM"), 0, 10, clk.getTempoPtr());
-	seq.init(&clk, &bank[0], onTrigger,bank);
 	clk.setOnStep(onStep);
 	clk.setOnBeat(onBeat);
-	setMode(0,1);
+#endif
+	//CheckMode();
+	lcd.clear();
 
 	//PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
 }
@@ -453,7 +539,7 @@ void onBeat(uint32_t pulses, uint32_t beats) {
 }
 
 #ifndef __SAMD51__
-boolean chkEEPROM() {
+/*boolean chkEEPROM() {
 	byte valueA = EEPROM.read(0x00);
 	byte valueB = EEPROM.read(0x01);
 	if ((char)valueA == 'D' && (char)valueB == 'P') {
@@ -488,9 +574,10 @@ void  eepromBootLoad() {
 		lcd.print("Initialized");
 	}
 }
+*/
 #endif
 void onStep(uint32_t pulse, uint32_t steps) {
-	updateUI();
+	currentView->updateView();
 }
 
 
@@ -518,11 +605,38 @@ void setMode(byte mode, byte items) {
 // the loop function runs over and over again until power down or reset
 void loop() {
 	/// Poll Inputs
-	encoder.tick();
-	reader.tick();
-	FunctionPad.tick();
-	Serial.println(millis()-Crono);
-	Crono = millis();
+	//encoder->tick();
+	//reader.tick();
+	//FunctionPad.tick();
+	btns->Read();
+#ifdef BUTTON_TEST
+	lcd.setCursor(0, 0);
+	//lcd.print(encoder->getPosition());
+	//CheckMode();
+	//lcd.print((int)encoder->getDirection());
+	lcd.setCursor(0, 1);
+	lcd.print("D?");
+	byte btp=btns->isDown();
+	lcd.setCursor(7,0);
+	char mark;
+	lcd.print("[");
+	for (int i = 0; i < 8; i++) {
+		if ((btp & (0x01 << i)) > 0) {
+			mark = (char)'!';
+		}
+		else {
+			mark = (char)'.';
+		}
+		lcd.print(mark);
+	}
+	lcd.print("]");
+	lcd.setCursor(3, 1);
+	lcd.print((int)(millis() / 1000));
+	lcd.print(("."));
+	lcd.print((int)(millis() / 100));
+
+#else
+	CheckMode();
 	currentView->tick();
 	if (encoder.getDirection() == RotaryEncoder::Direction::CLOCKWISE) {
 		currentView->cmd_up();
@@ -553,106 +667,11 @@ void loop() {
 	if (isAltBoot) {
 		//Todo
 	}
-#pragma region Static Mode Change and Function Buttons
-#ifdef RESIST_MATRIX
-	reader.readRBtn();
 
-	//These buttons always perform the same function 
-	// nomatter what the display mode is.
-	if (reader.getRBtnPressed() == 0) {
-		if (displayMode != MODE_PLAY) {
-			setDisplayMode(MODE_PLAY,3);
-		}
-	}
-	else if (reader.getRBtnPressed() == 1) {
-		if (displayMode != MODE_PROG) {
-			setDisplayMode(MODE_PROG, 4);
-		}
-	}
-	else if (reader.getRBtnPressed() == 5) {
-		isMetronomeRunning = !isMetronomeRunning;
-		updateUI();
-	}
-	else if (reader.getRBtnPressed() == 6) {
-		if (NavMode) {
-			if (itemIndex > 0) {
-				itemIndex--;
-				updateUI();
-			}
-		}
-		else {
-			//todo
-		}
-	}
-	else if (reader.getRBtnPressed() == 7) {
-		NavMode = !NavMode;
-		if (!NavMode) {
-			swapIn(itemIndex);
-			
-		}
-		else {
-			swapOut(itemIndex);
-		}
-		updateUI();
-	}
-	else if (reader.getRBtnPressed() == 8) {
-		if (NavMode) {
-			if (itemIndex < itemMax) {
-				itemIndex++;
-				updateUI();
-			}
-		}
-		else {
-			//todo
-		}
-
-	}	
-	else if (reader.getRBtnPressed() == 9) {
-		if (!clk.isRunning()) {
-			clk.reset();
-			updateUI();
-		}
-	}
-	else if (reader.getRBtnPressed() == 10) {
-		if (!clk.isRunning()) {
-			clk.start();
-		}
-		else {
-			clk.stop();
-		}
-		updateUI();
-	}
-
-	if (reader.haveBtnsChanged()) {
-		if (displayMode == MODE_PLAY) doModeBtns();
-	}
-	#endif
-#ifdef FUNCTION_PNL
-
-	//Check to see if which mode we are in
-	bool playSw = digitalRead(PLAY_MODE_PIN);
-	bool kitSw = digitalRead(KIT_MODE_PIN);
-/*	if (!playSw&&kitSw) {
-		if (NavData.opMode != 0) {
-			setMode(MODE_PLAY,3);
-		}
-	}
-	else if (playSw && kitSw) {
-		if (NavData.opMode != 1) {
-			setMode(MODE_PROG, 3);
-		}
-	}
-	else if (playSw && !kitSw) {
-		if (NavData.opMode != 2) {
-			setMode(MODE_KIT, 3);
-		}
-	}
-	*/
-#endif // FUNCTION_PNL
-
-#pragma endregion
+#endif
 }
 
+#pragma region OLD Lcd Output
 /*
 void PlayMode() {
 	if (NavData.RedrawUI) {
@@ -660,7 +679,7 @@ void PlayMode() {
 		
 	}
 }
-*/
+
 void updateUI() {
 	NavData.UpdateUI=true;
 }
@@ -859,18 +878,8 @@ void swapIn(int item) {
 
 	}
 }
-
-void swapOut(int item) {
-
-}
-
-void processAdd(int item) {
-
-}
-void processSubtract(int item) {
-
-}
-
+*/
+#pragma endregion
 void altBootLoop() {
 	while(true){
 

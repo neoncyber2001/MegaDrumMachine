@@ -2,9 +2,9 @@
 // 
 // 
 
-#include "IntWidget.h"
+#include "UIntWidget.h"
 
-IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, bool readOnly)
+UIntWidget::UIntWidget(String* Label, byte row, byte col, unsigned int* boundValue, bool readOnly)
 {
 	m_label = Label;
 	m_row = row;
@@ -16,7 +16,7 @@ IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, bool re
 	m_isReadOnly = readOnly;
 }
 
-IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, onSubmitFn submitCB, bool readOnly)
+UIntWidget::UIntWidget(String* Label, byte row, byte col, unsigned int* boundValue, onSubmitFn submitCB, bool readOnly)
 {
 	m_label = Label;
 	m_row = row;
@@ -29,7 +29,7 @@ IntWidget::IntWidget(String* Label, byte row, byte col, int* boundValue, onSubmi
 	m_isReadOnly = readOnly;
 }
 
-void IntWidget::NextValue()
+void UIntWidget::NextValue()
 {
 	if (m_isEditing) {
 		if (m_scratchVar < m_ubound) {
@@ -38,7 +38,7 @@ void IntWidget::NextValue()
 	}
 }
 
-void IntWidget::PreviousValue()
+void UIntWidget::PreviousValue()
 {
 	if (m_isEditing) {
 		if (m_scratchVar > m_lbound) {
@@ -47,7 +47,7 @@ void IntWidget::PreviousValue()
 	}
 }
 
-void IntWidget::SubmitValue()
+void UIntWidget::SubmitValue()
 {
 	*m_boundVar = m_scratchVar;
 	if (m_isSetOnSubmit) {
@@ -55,17 +55,17 @@ void IntWidget::SubmitValue()
 	}
 }
 
-void IntWidget::setSelected(bool val)
+void UIntWidget::setSelected(bool val)
 {
 	m_isSelected = val;
 }
 
-void IntWidget::setEdit(bool val)
+void UIntWidget::setEdit(bool val)
 {
 	m_isEditing = val;
 }
 
-void IntWidget::drawSelf(LiquidCrystal_I2C *lcd)
+void UIntWidget::drawSelf(LiquidCrystal_I2C* lcd)
 {
 	lcd->setCursor(m_col, m_row);
 	if (m_label->length() > 4) {
@@ -93,7 +93,7 @@ void IntWidget::drawSelf(LiquidCrystal_I2C *lcd)
 	}
 }
 
-void IntWidget::updateSelf(LiquidCrystal_I2C *lcd)
+void UIntWidget::updateSelf(LiquidCrystal_I2C* lcd)
 {
 	lcd->setCursor(m_col + 5, m_row);
 	if (m_isEditing) {
@@ -117,7 +117,7 @@ void IntWidget::updateSelf(LiquidCrystal_I2C *lcd)
 	}
 }
 
-void IntWidget::setValueConstrain(int min, int max)
+void UIntWidget::setValueConstrain(unsigned int min, unsigned int max)
 {
 	if (max > min) {
 		m_ubound = max;

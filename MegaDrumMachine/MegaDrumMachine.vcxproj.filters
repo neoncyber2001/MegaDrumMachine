@@ -90,6 +90,12 @@
     <ClInclude Include="DMPins.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UIntWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonsSimple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeatClock.cpp">
@@ -147,6 +153,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StepTriggerIndicator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIntWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonsSimple.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

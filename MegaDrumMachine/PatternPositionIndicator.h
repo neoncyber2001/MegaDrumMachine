@@ -18,10 +18,10 @@ class PatternPositionIndicator:public IVisibleWidget
 	 int m_col;
 	 char m_sixteenth;
 	 char m_quarter;
-	 int* m_boundVar;
+	 unsigned int* m_boundVar;
 
  public:
-	 PatternPositionIndicator(int column, int row,  int* var);
+	 PatternPositionIndicator(int column, int row, unsigned int* var);
 
 	 // Inherited via IVisibleWidget
 	 virtual void drawSelf(LiquidCrystal_I2C *lcd) override;

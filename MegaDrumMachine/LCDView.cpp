@@ -31,13 +31,13 @@ void LCDView::tick()
 		m_lcd->print(m_title);
 		m_lcd->print(">");
 		for (int i = 0; i < m_count; i++) {
-			m_widgets[i].drawSelf(*m_lcd);
+			m_widgets[i].drawSelf(m_lcd);
 		}
 		m_drawRequired = false;
 	}
 	if (m_updateRequired) {
 		for (int i = 0; i < m_count; i++) {
-			m_widgets[i].updateSelf(*m_lcd);
+			m_widgets[i].updateSelf(m_lcd);
 		}
 		m_updateRequired = false;
 	}
