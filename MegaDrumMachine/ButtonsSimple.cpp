@@ -3,10 +3,23 @@
 // 
 
 #include "ButtonsSimple.h"
-
+/// <summary>
+/// 
+/// </summary>
 ButtonsSimple::ButtonsSimple()
 {
 	m_isStarted = false;
+}
+ 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="btns"></param>
+ButtonsSimple::ButtonsSimple(int* btns[8])
+{
+	for (int i = 0; i < 8; i++) {
+		m_btnReaders[i] = *btns[i];
+	}
 }
 
 void ButtonsSimple::Add(int pin, int PullUp)

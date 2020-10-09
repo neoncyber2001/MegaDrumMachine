@@ -13,13 +13,14 @@
 class ButtonsSimple
 {
  protected:
-	 int m_btnReaders[8];
+	 int m_btnReaders[8] = {};
 	 byte m_Values = 0x00;
 	 byte m_History = 0x00;
 	 byte m_buttons = 0;
 	 bool m_isStarted = false;
  public:
 	ButtonsSimple();
+    ButtonsSimple(int*btns[8]);
 	void Add(int pin, int PullUp);
 	void Start();
 	void Read();
