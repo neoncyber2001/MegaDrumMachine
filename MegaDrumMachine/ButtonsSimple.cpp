@@ -3,6 +3,7 @@
 // 
 
 #include "ButtonsSimple.h"
+/*
 /// <summary>
 /// 
 /// </summary>
@@ -15,6 +16,8 @@ ButtonsSimple::ButtonsSimple()
 /// 
 /// </summary>
 /// <param name="btns"></param>
+///
+
 ButtonsSimple::ButtonsSimple(int* btns[8])
 {
 	for (int i = 0; i < 8; i++) {
@@ -44,9 +47,10 @@ void ButtonsSimple::Read()
 		m_History = m_Values;
 		m_Values = 0x00;
 		for (int i = 0; i < m_buttons; i++) {
-			if (digitalRead(m_btnReaders[i])) {
+			if (!digitalRead(m_btnReaders[i])) {
 				m_Values = m_Values | (0x01 << i);
 			};
 		}
 	}
 }
+*/

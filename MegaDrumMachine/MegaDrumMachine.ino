@@ -20,7 +20,6 @@ ZeAXOLy5nh0wNL19
 
 */
 
-#include "ButtonsSimple.h"
 #include "UIntWidget.h"
 #define VERSIONSTRING "76rGd0wA58LHXdVb"
 
@@ -57,16 +56,19 @@ ZeAXOLy5nh0wNL19
 #include "DMPins.h"
 
 
+/*
 volatile bool KnobStep = 0;
 volatile bool KnobDir = 0;
 int KnobValue = 0;
+
 void setStep(bool _dir) {
 	if (!KnobStep) {
 		KnobStep = true;
 		KnobDir = _dir;
 	}
-};
-static void update() {
+}
+
+void update() {
 	if (KnobStep) {
 		if (KnobDir) {
 			KnobValue++;
@@ -76,7 +78,7 @@ static void update() {
 		}
 		KnobStep = false;
 	}
-} ;
+}
 
 void KnobISR() {
 	if (digitalRead(PIN_ROTARY_B)) {
@@ -86,7 +88,7 @@ void KnobISR() {
 		setStep(false);
 	}
 }
-
+*/
 #pragma region SDConstants
 
 	#include <SD.h>
@@ -102,7 +104,7 @@ void KnobISR() {
 
 #pragma endregion
 
-RotaryEncoder *encoder = new RotaryEncoder(PIN_ROTARY_A, PIN_ROTARY_B);
+//RotaryEncoder *encoder = new RotaryEncoder(PIN_ROTARY_A, PIN_ROTARY_B);
 //4 x Illuminated Function Buttons (Red: 30, White: 27 to 29) + Rotary Encoder Click(26)
 //BtnPad FunctionPad;
 int FunctionPins[5] = { PIN_ROTARY_CLICK, PIN_BTN_C, PIN_BTN_RED, PIN_BTN_B, PIN_BTN_A };
@@ -288,23 +290,18 @@ LCDView* currentView = PlayView;
 
 #pragma endregion
  
- ButtonsSimple *btns = new ButtonsSimple();
-void setup() {
+ Bounce* buttons = new Bounce[4];
+ int btnPins[] = { 26, 27, 29, 31 };
+// ButtonsSimple *btns = new ButtonsSimple();
+
+ 
+ 
+ void setup() {
 	Serial.begin(9600);
 	reader.begin(true);
-	//FunctionPad.init(FunctionPins, 5,false);
-	btns->Add(PIN_ROTARY_CLICK, INPUT);
-	btns->Add(PIN_BTN_RED, INPUT);
-	btns->Add(PIN_BTN_A, INPUT);
-	btns->Add(PIN_BTN_B, INPUT);
-	btns->Add(PIN_BTN_C, INPUT);
-	btns->Add(PIN_MODETOG_A, INPUT);
-	btns->Add(PIN_MODETOG_B, INPUT);
-	btns->Start();
-	attachInterrupt(digitalPinToInterrupt(PIN_ROTARY_A), KnobISR, HIGH);
-	//Set Pins for Mode Selector Switch;
-//	pinMode(PIN_MODETOG_A, INPUT);
-//	pinMode(PIN_MODETOG_B, INPUT);
+	for (int i = 0; i < 4; i++) {
+		buttons[i].attach(btnPins[i], INPUT);
+	}
 	//LCD Setup
 	lcd.init();                      // initialize the lcd 
 	lcd.noAutoscroll();
@@ -313,35 +310,23 @@ void setup() {
 	lcd.backlight();
 	lcd.clear();
 	lcd.setCursor(0, 0);
-#ifndef BUTTON_TEST
-#ifdef __SAMD51__
-	SDSetup();
-#else
-#error Currently only SAMD15 supported
-#endif
 
-	delay(500);
-	CheckAltBoot();
-	lcd.clear();
-	lcd.setCursor(16,0);
-	lcd.print("DR-2650");
-	lcd.setCursor(7,1);
-	lcd.print("WAV TRIGGER - DRUM MACHINE");
-	delay(1000);
-	initWaveTrigger();
-	//Init clock and sequencer
-	seq.init(&clk, &bank[0], onTrigger, bank);
-	clk.init(true, false, false);
-	clk.setOnStep(onStep);
-	clk.setOnBeat(onBeat);
-#endif
 	//CheckMode();
 	lcd.clear();
 
 	//PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
 }
 
-#ifdef __SAMD51__
+void loop() {
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < 4; i++) {
+		buttons[i].update();
+		lcd.print(buttons[i].read());
+	}
+}
+
+#pragma region SD
+
 void SDBootLoad() {
 	if (SD.exists(SDFILE)) {
 		File dataFile = SD.open(SDFILE, FILE_READ);
@@ -524,7 +509,8 @@ bool SaveKitSD(String kitPth, DrumKit* kit) {
 	kitFile.close();
 }
 
-#endif
+
+#pragma endregion
 
 void onBeat(uint32_t pulses, uint32_t beats) {
 	if (isMetronomeRunning) {
@@ -590,8 +576,6 @@ void onTrigger(byte trigger) {
 	}
 }
 
-byte dsp = 0;
-
 void setMode(byte mode, byte items) {
 	NavData.opMode = mode;
 	NavData.displayMode=mode;
@@ -603,73 +587,6 @@ void setMode(byte mode, byte items) {
 }
 
 // the loop function runs over and over again until power down or reset
-void loop() {
-	/// Poll Inputs
-	//encoder->tick();
-	//reader.tick();
-	//FunctionPad.tick();
-	btns->Read();
-#ifdef BUTTON_TEST
-	lcd.setCursor(0, 0);
-	//lcd.print(encoder->getPosition());
-	//CheckMode();
-	//lcd.print((int)encoder->getDirection());
-	lcd.setCursor(0, 1);
-	lcd.print("D?");
-	byte btp=btns->isDown();
-	lcd.setCursor(7,0);
-	char mark;
-	lcd.print("[");
-	for (int i = 0; i < 8; i++) {
-		if ((btp & (0x01 << i)) > 0) {
-			mark = (char)'!';
-		}
-		else {
-			mark = (char)'.';
-		}
-		lcd.print(mark);
-	}
-	lcd.print("]");
-	lcd.setCursor(3, 1);
-	lcd.print((int)(millis() / 1000));
-	lcd.print(("."));
-	lcd.print((int)(millis() / 100));
-
-#else
-	CheckMode();
-	currentView->tick();
-	if (encoder.getDirection() == RotaryEncoder::Direction::CLOCKWISE) {
-		currentView->cmd_up();
-		/*
-		if (NavData.itemIndex < NavData.items) {
-			NavData.itemIndex++;
-		}
-		else {
-			NavData.itemIndex = NavData.items;
-		}
-		*/
-	}
-	else if(encoder.getDirection() == RotaryEncoder::Direction::COUNTERCLOCKWISE) {
-		/*
-		if (NavData.itemIndex > 0) {
-			NavData.itemIndex--;
-		}
-		else {
-			NavData.itemIndex = 0;
-		}
-		*/
-		currentView->cmd_down();
-	}
-	if (FunctionPad.isButtonJustPressed(0)) {
-		currentView->cmd_select();
-	}
-
-	if (isAltBoot) {
-		//Todo
-	}
-
-#endif
-}
 
 #pragma region OLD Lcd Output
 /*
