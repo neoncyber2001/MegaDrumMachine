@@ -84,6 +84,23 @@ namespace DrumMachineDesktopApp
             NotifyPropertyChanged("AudioSamples");
         }
 
+
+        protected async Task ImportDirectory()
+        {
+            System.Windows.Forms.FolderBrowserDialog browseDlg = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = browseDlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                System.Windows.Forms.MessageBox.Show(browseDlg.SelectedPath);
+            }
+            else { 
+                return;
+            }
+            FileScanner scanner = new FileScanner();
+            List<AudioSample> samps = await scanner.ScanDirectoryForSamples(browseDlg.SelectedPath, true);
+            samps.ForEach((s) => Add_AudioSamples(s));
+        }
+
         protected void ImportWavFiles()
         {            
             OpenFileDialog openFD = new OpenFileDialog();
@@ -149,15 +166,17 @@ namespace DrumMachineDesktopApp
             {
                 FileStream stream = File.OpenRead(inFile);
                 BinaryFormatter formatter = new BinaryFormatter();
-                if ((ObservableCollection<AudioSample>)formatter.Deserialize(stream)!= null)
-                {
+                try{
                     _AudioSamples = (ObservableCollection<AudioSample>)formatter.Deserialize(stream);
                 }
-                else
+                catch
                 {
                     Debug.WriteLine("Out is not correct");
                 }
-                stream.Close();
+                finally
+                {
+                    stream.Close();
+                }
                 NotifyPropertyChanged("AudioSamples");
             }
         }
@@ -179,7 +198,20 @@ namespace DrumMachineDesktopApp
             cb.Add(new CommandBinding(Commands.SampleCommands.SaveLibrary, SaveLibrary_Executed, SaveLibrary_CanExecute));
             cb.Add(new CommandBinding(Commands.SampleCommands.LoadLibrary, LoadLibrary_Executed, LoadLibrary_CanExecute));
             cb.Add(new CommandBinding(Commands.SampleCommands.ScanSDCard, ScanSDCard_Executed, ScanSDCard_CanExecute));
+            cb.Add(new CommandBinding(Commands.SampleCommands.ImportDirectory, ImportDirectory_Executed, ImportDirectory_CanExecute));
             return cb;
+        }
+
+        //CommandBindingEventHandlers for ImportDirectory
+        private void ImportDirectory_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            //Todo
+            e.CanExecute = true;
+        }
+
+        private async void ImportDirectory_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            await ImportDirectory();
         }
 
 
