@@ -35,7 +35,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="3" AutoGenerateColumns="False" ItemsSource="{Binding CurrentPattern.patternSteps}">
+            <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="3" AutoGenerateColumns="False" ItemsSource="{Binding CurrentPattern.patternSteps, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="1" Binding="{Binding Track1}" MinWidth="32"/>
                     <DataGridCheckBoxColumn Header="2" Binding="{Binding Track2}" MinWidth="32"/>

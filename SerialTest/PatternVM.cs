@@ -57,13 +57,11 @@ namespace DrumMachineDesktopApp
                 _CurrentPattern = value;
                 NotifyPropertyChanged();
 
-                NotifyPropertyChanged("AvailablePatterns");
+//                NotifyPropertyChanged("AvailablePatterns");
 
                 NotifyPropertyChanged("NextPattern");
 
-                NotifyPropertyChanged("Steps");
-
-                NotifyPropertyChanged("BankId");
+               NotifyPropertyChanged("Steps");
             }
         }
 

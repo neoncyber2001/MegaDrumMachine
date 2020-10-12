@@ -29,6 +29,8 @@ namespace DrumMachineDesktopApp
 
         public PatternBankVM()
         {
+            Add_PatternBanks(new PatternBank() { name = "bank1" });
+            Add_PatternBanks(new PatternBank() { name = "bank2" });
 
         }
         private ObservableCollection<PatternBank> _PatternBanks = new ObservableCollection<PatternBank>();
@@ -69,8 +71,23 @@ namespace DrumMachineDesktopApp
         {
             List<CommandBinding> bindinglist = new List<CommandBinding>();
             bindinglist.Add(new CommandBinding(Commands.BankCommands.EditPatternBank, EditPatternBank_Executed, EditPatternBank_CanExecute));
+            bindinglist.Add(new CommandBinding(Commands.BankCommands.NewPatternBank, NewPatternBank_Executed, NewPatternBank_CanExecute));
             return bindinglist;
         }
+
+        //CommandBindingEventHandlers for NewPatternBank
+        private void NewPatternBank_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            //Todo
+            e.CanExecute = true;
+        }
+
+        private void NewPatternBank_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Add_PatternBanks(new PatternBank());
+            //ToDo
+        }
+
 
         //CommandBindingEventHandlers for EditPatternBank
         private void EditPatternBank_CanExecute(object sender, CanExecuteRoutedEventArgs e)

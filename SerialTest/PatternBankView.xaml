@@ -46,7 +46,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="3" Padding="3">New</Button>
+            <Button Margin="3" Padding="3" Command="command:BankCommands.NewPatternBank">New</Button>
             <Button Margin="3" Padding="3">Export</Button>
             <Button Margin="3" Padding="3">Import</Button>
             <Button Margin="3" Padding="3" Command="command:BankCommands.EditPatternBank" CommandParameter="{Binding SelectedValue, ElementName=bankGrid}">Edit Bank</Button>

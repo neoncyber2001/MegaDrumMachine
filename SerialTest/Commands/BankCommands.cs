@@ -13,5 +13,7 @@ namespace DrumMachineDesktopApp.Commands
         ///ToDo: Custom Command Name
         public static readonly RoutedUICommand EditPatternBank = new RoutedUICommand("EditPatternBank", "Edit Pattern Bank", typeof(BankCommands));
 
+        public static readonly RoutedUICommand NewPatternBank = new RoutedUICommand("NewPatternBank", "New Pattern Bank", typeof(BankCommands));
+
     }
 }
