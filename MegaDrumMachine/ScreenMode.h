@@ -14,42 +14,42 @@ enum ScreenCommand :byte {
 	/// <summary>
 	/// No command issued
 	/// </summary>
-	CMD_NONE=0x00,
+	SCMD_NONE=0x00,
 
 	/// <summary>
 	/// Transport button (play/stop) is pressed (red button on prototype box)
 	/// </summary>
-	CMD_TPortButton_Pressed,
+	SCMD_TPortButton_Pressed,
 	
 	/// <summary>
 	/// Metronome Button is pressed.
 	/// </summary>
-	CMD_MetroBtn_Pressed,
+	SCMD_MetroBtn_Pressed,
 	
 	/// <summary>
 	/// Storage Button is pressed
 	/// </summary>
-	CMD_StorageBtn_Pressed,
+	SCMD_StorageBtn_Pressed,
 	
 	/// <summary>
 	/// Action Button is pressed,
 	/// </summary>
-	CMD_ActionBtn_Pressed,
+	SCMD_ActionBtn_Pressed,
 	
 	/// <summary>
 	/// Encoder rotated to decrement a value.
 	/// </summary>
-	CMD_JogIncrement,
+	SCMD_JogIncrement,
 	
 	/// <summary>
 	/// Encoder rotated to increment a value.
 	/// </summary>
-	CMD_JogDecrement,
+	SCMD_JogDecrement,
 	
 	/// <summary>
 	/// Encoder Clicked
 	/// </summary>
-	CMD_JogButton_Pressed,		
+	SCMD_JogButton_Pressed,		
 	
 
 //	CMD_MatrixInput_Recieved	

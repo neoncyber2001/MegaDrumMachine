@@ -1,7 +1,0 @@
-// 
-// 
-// 
-
-#include "WidgetData.h"
-
-

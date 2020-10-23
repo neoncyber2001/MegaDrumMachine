@@ -28,6 +28,9 @@ class ProgramMode:public ScreenMode
 	 DrumKit* m_kit;
 	 BeatClock* m_clock;
 	 wavTrigger* m_wtrig;
+	 byte m_selectedChannel = 0;
+
+
  public:
 	 ProgramMode(PatternBank* bank, DrumKit* kit, BeatClock* clock, wavTrigger* wtrig, LiquidCrystal* lcd);
 

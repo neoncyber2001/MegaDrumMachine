@@ -36,20 +36,8 @@ class Storage
 
  public:
 	 uint32_t getAvailKits();
-	 bool saveKit(byte kitSlot, DrumKit kit);
+	 bool saveKit(int kitSlot, DrumKit*kit);
 	 DrumKit loadKit(byte kitSlot);
-	 DrumKit LoadKitFromSD(String kit);
-	 PatternBank LoadBankFromSD(String bank);
-
-	 String GetSDError() { return m_SDErrorMsg; };
-	 void SDSetup(LiquidCrystal *lcd);
-	 void SDBootLoad();
-	 bool VerifyFileHeaders(File dataFile, String header);
-	 bool WriteBankSD();
-	 PatternBank loadBankSD();
-	 bool loadKitSD(File kitFile, DrumKit* kit);
-	 bool SaveaKitSD(String kitPth, DrumKit* kit);
-	 int Storage::getAvailKits(String* list);
 
 };
 

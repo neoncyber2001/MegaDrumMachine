@@ -45,52 +45,16 @@
     <ClInclude Include="DrumKit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValueControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MenuVar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LCDWidgets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LCDView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LCDWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BtnPad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ByteWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WidgetData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IntWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IVisibleWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ISelectableWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IconIndicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PatternPositionIndicator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StepTriggerIndicator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DMPins.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UIntWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ButtonsSimple.h">
@@ -125,46 +89,13 @@
     <ClCompile Include="DrumKit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValueControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MenuVar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LCDWidgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LCDView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LCDWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BtnPad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ByteWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WidgetData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IntWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IVisibleWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IconIndicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PatternPositionIndicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StepTriggerIndicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIntWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ButtonsSimple.cpp">
