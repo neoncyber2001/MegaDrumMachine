@@ -68,6 +68,11 @@ wavTrigger wTrig;
 
 ButtonReader reader = ButtonReader();
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x14, 40, 02);
+PatternBank bank;
+DrumKit kit;
+BeatClock clock;
+
+ScreenMode* Modes = { new ProgramMode(&bank, &kit, &clock, &wTrig, (LiquidCrystal*)&lcd) };
 
 void initWaveTrigger() {
 	 wTrig.start();

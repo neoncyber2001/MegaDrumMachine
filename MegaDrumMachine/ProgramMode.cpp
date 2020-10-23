@@ -73,6 +73,14 @@ void ProgramMode::UpdateScreen()
 	m_lcd->setCursor(36, 0);
 	m_lcd->print(m_clock->getStepsBar(), BIN);
 	m_lcd->print(" ");
+	
+	m_lcd->setCursor(39, 0);
+	if (m_isMetro) {
+		m_lcd->print((char)0);
+	}
+	else {
+		m_lcd->print(" ");
+	}
 }
 
 void ProgramMode::IssueCommand(ScreenCommand cmd)
