@@ -17,7 +17,7 @@ void ProgramMode::Tick()
 {
 	if (m_clock->isRunning()) {
 		if (m_clock->isStep()) {
-			if ((m_clock->getStepsBar() % 4) == 0) {
+			if (((m_clock->getStepsBar() % 4) == 0 )&& m_isMetro) {
 				if (m_clock->getStepsBar() == 0) {
 					m_wtrig->trackPlayPoly(SYSTK_METRO_A);
 				}
@@ -101,6 +101,8 @@ void ProgramMode::IssueCommand(ScreenCommand cmd)
 			m_isStepSequencing = false;
 		}
 		break;
+	case SCMD_MetroBtn_Pressed:
+		m_isMetro = !m_isMetro;
 	case SCMD_StorageBtn_Pressed:
 		//todo Temp switch to BankStorage mode.
 		break;
