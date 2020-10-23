@@ -26,52 +26,28 @@ typedef void (*onBeatFn)(uint32_t, uint32_t);	//void onStep(uint32_t pulses, uin
 class BeatClock
 {
  protected:
-	 
-	 bool m_spstate = 0;
-	 byte m_SyncPin=0;
-	 byte m_SyncMod = 1;
-	 bool m_isClockMaster;
-	 bool m_isTrigger;
-	 bool m_isUartMidi;
-	 bool m_isPulseSet;
-	 bool m_isStepSet;
-	 bool m_isBeatSet;
-	 unsigned int m_pulses;
-	 onPulseFn m_onPulse;
-	 onStepFn m_onStep;
-	 onBeatFn m_onBeat;
-	 unsigned int m_tempo; //in bpm
-	 unsigned int m_ppqn=24; //Pulses Per Quarter Note
-	 bool m_isRunning;
-	 unsigned int m_beats;
-	 unsigned int m_steps;
-	 unsigned long m_nextPulse;
-	 unsigned long m_pulseTime;
-	 unsigned long m_CalculatePulseTime();
+	 bool m_isRunning = false;
+	 unsigned long m_nextStep=0;
+	 unsigned long m_millisPerStep=0;
+	 unsigned int m_steps=0;
+	 unsigned int m_beats=0;
+	 unsigned int m_BPM=120;
+	 bool m_isStep = false;
+	 void m_recalc();
  public:
 	BeatClock();
-	void init();
-	void init(bool master, bool midi, bool trigger);
-	void setOnPulse(onPulseFn userFn);
-	void setOnStep(onStepFn userFn);
-	void setOnBeat(onBeatFn userFn);
 	void tick();
-	unsigned int* getCurrentPulses();
-	unsigned int* getCurrentSteps();
-	unsigned int* getCurrentBeats();
-	void setTempo(int bpm);
-	unsigned int* getTempo();
-	//void setPPQN(int pulses);
-	//int getPPQN();
-	void start();
-	void stop();
-	void reset();
-	bool isRunning();
-	unsigned int* getTempoPtr() { return &m_tempo; }
-	unsigned int* getPulsePtr() { return &m_pulses; }
-	unsigned int* getBeatPtr() { return &m_beats; }
-	unsigned int* getStepsPtr() { return &m_steps; }
-	bool* getRunningPtr() { return &m_isRunning; }
+	void setBPM(unsigned int bpm);
+	unsigned int getBPM() {return m_BPM;}
+	bool isStep() {	return m_isStep; }
+	int getSteps() { return m_steps; }
+	int getStepsBar() { return m_steps % 16; }
+	int getBeats() { return m_beats; }
+	int getBeatsBar() { return m_beats = 0; }
+	void Start();
+	void Stop() { m_isRunning = false; }
+	bool isRunning() { return m_isRunning; }
+
 
 };
 
