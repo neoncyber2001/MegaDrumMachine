@@ -3867,64 +3867,63 @@ LOAD c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi
  *(.data*)
  .data          0x20000000        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
                 0x20000000                __dso_handle
- .data.btnPins  0x20000004       0x10 MegaDrumMachine.cpp.o
+ .data.btnPins  0x20000004       0x1c MegaDrumMachine.cpp.o
                 0x20000004                btnPins
  .data._ZN8SdVolume17cacheBlockNumber_E
-                0x20000014        0x4 SD\utility\SdVolume.cpp.o
-                0x20000014                SdVolume::cacheBlockNumber_
+                0x20000020        0x4 SD\utility\SdVolume.cpp.o
+                0x20000020                SdVolume::cacheBlockNumber_
  .data._ZL5ticks
-                0x20000018        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(Reset.cpp.o)
+                0x20000024        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(Reset.cpp.o)
  .data._ZL10breakValue
-                0x2000001c        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
+                0x20000028        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
  .data._ZL12_usbLineInfo
-                0x20000020        0x8 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
+                0x2000002c        0x8 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
  .data._ZL13_cdcInterface
-                0x20000028       0x42 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
- *fill*         0x2000006a        0x2 
+                0x20000034       0x42 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
+ *fill*         0x20000076        0x2 
  .data._serialPeek
-                0x2000006c        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
-                0x2000006c                _serialPeek
+                0x20000078        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
+                0x20000078                _serialPeek
  .data.EndPoints
-                0x20000070       0x28 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(USBCore.cpp.o)
-                0x20000070                EndPoints
+                0x2000007c       0x28 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(USBCore.cpp.o)
+                0x2000007c                EndPoints
  .data.SystemCoreClock
-                0x20000098        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(wiring.c.o)
-                0x20000098                SystemCoreClock
+                0x200000a4        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(wiring.c.o)
+                0x200000a4                SystemCoreClock
  .data._impure_ptr
-                0x2000009c        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
-                0x2000009c                _impure_ptr
+                0x200000a8        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x200000a8                _impure_ptr
  .data.impure_data
-                0x200000a0       0x60 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x200000ac       0x60 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
  .data.__global_locale
-                0x20000100      0x16c c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-locale.o)
-                0x20000100                __global_locale
-                0x2000026c                . = ALIGN (0x4)
-                0x2000026c                PROVIDE (__preinit_array_start, .)
+                0x2000010c      0x16c c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-locale.o)
+                0x2000010c                __global_locale
+                0x20000278                . = ALIGN (0x4)
+                0x20000278                PROVIDE (__preinit_array_start, .)
  *(.preinit_array)
-                0x2000026c                PROVIDE (__preinit_array_end, .)
-                0x2000026c                . = ALIGN (0x4)
-                0x2000026c                PROVIDE (__init_array_start, .)
+                0x20000278                PROVIDE (__preinit_array_end, .)
+                0x20000278                . = ALIGN (0x4)
+                0x20000278                PROVIDE (__init_array_start, .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array)
- .init_array    0x2000026c        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
- .init_array    0x20000270        0x4 MegaDrumMachine.cpp.o
- .init_array    0x20000274        0x4 Wire\Wire.cpp.o
- .init_array    0x20000278        0x4 SPI\SPI.cpp.o
- .init_array    0x2000027c        0x4 SD\SD.cpp.o
- .init_array    0x20000280        0x4 SD\utility\Sd2Card.cpp.o
- .init_array    0x20000284        0x4 C:\Users\djneo\AppData\Local\Temp\VMBCore\arduino16x\9c68673ebfce96ce038e39692a3550a3\variant\variant.cpp.o
- .init_array    0x20000288        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
- .init_array    0x2000028c        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(USBCore.cpp.o)
-                0x20000290                PROVIDE (__init_array_end, .)
-                0x20000290                . = ALIGN (0x4)
+ .init_array    0x20000278        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
+ .init_array    0x2000027c        0x4 MegaDrumMachine.cpp.o
+ .init_array    0x20000280        0x4 Wire\Wire.cpp.o
+ .init_array    0x20000284        0x4 SPI\SPI.cpp.o
+ .init_array    0x20000288        0x4 SD\SD.cpp.o
+ .init_array    0x2000028c        0x4 SD\utility\Sd2Card.cpp.o
+ .init_array    0x20000290        0x4 C:\Users\djneo\AppData\Local\Temp\VMBCore\arduino16x\9c68673ebfce96ce038e39692a3550a3\variant\variant.cpp.o
+ .init_array    0x20000294        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(CDC.cpp.o)
+ .init_array    0x20000298        0x4 C:\Users\djneo\AppData\Local\Temp\VMBuilds\MegaDrumMachine\adafruit_adafruit_grandcentral_m4\Firmware/core.a(USBCore.cpp.o)
+                0x2000029c                PROVIDE (__init_array_end, .)
+                0x2000029c                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array)
- .fini_array    0x20000290        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
+ .fini_array    0x2000029c        0x4 c:/users/djneo/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end, .)
  *(.jcr*)
                 0x200002a0                . = ALIGN (0x10)
- *fill*         0x20000294        0xc 
                 0x200002a0                __data_end__ = .
 
 .igot.plt       0x200002a0        0x0 load address 0x0000c820

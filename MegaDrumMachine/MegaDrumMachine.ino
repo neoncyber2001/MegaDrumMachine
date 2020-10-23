@@ -20,6 +20,9 @@ ZeAXOLy5nh0wNL19
 
 */
 
+#include "Storage.h"
+#include "ProgramMode.h"
+#include "ScreenMode.h"
 #include "UIntWidget.h"
 #define VERSIONSTRING "76rGd0wA58LHXdVb"
 
@@ -89,20 +92,7 @@ void KnobISR() {
 	}
 }
 */
-#pragma region SDConstants
 
-	#include <SD.h>
-	#define SDFILE	"DRUMDATA.DAT"
-	#define SD_FILE_HEADER "AA.M4.DRUM.DATA."
-
-	#define SD_BANK_FILE	"PATTERNBANK.DAT"
-	#define SD_BANK_FILE_HEADER "AA.M4.PATT.BANK."
-
-	#define SD_KIT_FILE_A	"KITDATA_0.DAT"
-	#define SD_KIT_FILE_B	"KITDATA_1.DAT"
-	#define SD_KIT_FILE_HEADER "AA.M4.SAMPL.KIT."
-
-#pragma endregion
 
 //RotaryEncoder *encoder = new RotaryEncoder(PIN_ROTARY_A, PIN_ROTARY_B);
 //4 x Illuminated Function Buttons (Red: 30, White: 27 to 29) + Rotary Encoder Click(26)
@@ -197,6 +187,7 @@ LCDView* currentView = PlayView;
 #pragma endregion
 
 #pragma region SDSetup
+ /*
  void SDSetup() {
 	if (!SD.begin()) {
 		lcd.setCursor(3, 0);
@@ -228,7 +219,7 @@ LCDView* currentView = PlayView;
 		SDBootLoad();
 		SD.end();
 	}
-}
+}*/
 #pragma endregion
 
 #pragma region Check for Boot Buttons
@@ -289,9 +280,9 @@ LCDView* currentView = PlayView;
 }
 
 #pragma endregion
- 
- Bounce* buttons = new Bounce[4];
- int btnPins[] = { 26, 27, 29, 31 };
+#define BTNCT	7
+ Bounce* buttons = new Bounce[BTNCT];
+ int btnPins[BTNCT] = {24, 25, 26, 27, 29, 31, 28 };
 // ButtonsSimple *btns = new ButtonsSimple();
 
  
@@ -299,9 +290,10 @@ LCDView* currentView = PlayView;
  void setup() {
 	Serial.begin(9600);
 	reader.begin(true);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < BTNCT; i++) {
 		buttons[i].attach(btnPins[i], INPUT);
 	}
+
 	//LCD Setup
 	lcd.init();                      // initialize the lcd 
 	lcd.noAutoscroll();
@@ -310,8 +302,6 @@ LCDView* currentView = PlayView;
 	lcd.backlight();
 	lcd.clear();
 	lcd.setCursor(0, 0);
-
-	//CheckMode();
 	lcd.clear();
 
 	//PlayView.begin(2, 40, String("Play"), 4, playWidgets, &lcd);
@@ -319,13 +309,14 @@ LCDView* currentView = PlayView;
 
 void loop() {
 	lcd.setCursor(0, 0);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < BTNCT; i++) {
 		buttons[i].update();
 		lcd.print(buttons[i].read());
 	}
 }
 
 #pragma region SD
+/*
 
 void SDBootLoad() {
 	if (SD.exists(SDFILE)) {
@@ -394,7 +385,6 @@ void SDBootLoad() {
 		dataFile.close();
 	}
 }
-
 bool VerifyFileHeaders(File dataFile, String header) {
 	lcd.clear();
 	lcd.setCursor(0,0);
@@ -437,6 +427,7 @@ bool VerifyFileHeaders(File dataFile, String header) {
 		}
 	}
 }
+
 
 
 bool WriteBankSD() {
@@ -508,7 +499,7 @@ bool SaveKitSD(String kitPth, DrumKit* kit) {
 
 	kitFile.close();
 }
-
+*/
 
 #pragma endregion
 
